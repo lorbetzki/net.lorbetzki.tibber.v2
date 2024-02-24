@@ -1,0 +1,12 @@
+{
+    "id": "{D10B7DAE-2D79-8254-B521-CC626BF62FBD}",
+    "name": "Tibber V.2",
+    "author": "Kristian Lorbetzki, Philipp Hirzel",
+    "url": "https://github.com/lorbetzki/net.lorbetzki.tibber.v2.git",
+    "compatibility": {
+        "version": "7.1"
+    },
+    "version": "2.0",
+    "build": 20240223,
+    "date": 0
+}

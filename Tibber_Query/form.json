@@ -1,0 +1,109 @@
+{
+    "elements": 
+    [
+        {
+            "type": "ValidationTextBox",
+            "name": "Token",
+            "caption": "User-Token"
+
+        },
+        { 
+            "type": "RowLayout",
+            "items": [
+                {
+                    "type": "Select",
+                    "name": "Home_ID",
+                    "caption": "Select Home",
+                    "visible": false,
+                    "options": [ {"caption" : "Select Home", "value":"0"} ]
+                },
+                {
+                    "type": "Button",
+                    "label": "Select Home",
+                    "onClick": "IPS_RequestAction($id, 'GetHomesData', '');",
+                    "enabled": false,
+                    "visible": false
+                    }
+            ]
+        },
+        {   "type": "CheckBox",
+            "name": "Consumption_log",
+            "caption": "Logging consumption data",
+            "visible": false
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "Price Data -> Variable Settings",
+            "expanded": true,
+            "items": [
+                    { 
+                        "type": "RowLayout",
+                        "items": [
+                            {   "type": "CheckBox",
+                                "name": "Price_log",
+                                "caption": "Log price data variable",
+                                "visible": true,
+                                "enabled": true
+                            }
+                        ]
+                    },
+                    
+                    {   "type": "CheckBox",
+                        "name": "Price_Variables",
+                        "caption": "Price - create variables per hour (24 for current day & 24 for day ahead day)",
+                        "visible": true
+                    },
+                    {   "type": "CheckBox",
+                        "name": "Statistics",
+                        "caption": "create statistics, like min/max price, quantity of price level etc and activate logging",
+                        "visible": true
+                    }
+                ]
+        },
+        {   "type": "CheckBox",
+            "name": "InstanceActive",
+            "caption": "activate Instance"
+        }
+           
+    ],
+    "actions": [
+       
+        {
+            "type": "Button",
+            "label": "Retrieve price data",
+            "onClick": "TIBV2_GetPriceData($id);"
+          },
+          {
+            "type": "Button",
+            "label": "Retrieve Home ID",
+            "onClick": "IPS_RequestAction($id, 'GetHomesData', '');"
+          }
+    ],
+    "status": [
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "Please insert Token"
+          },
+          {
+            "code": 202,
+            "icon": "error",
+            "caption": "Home ID not available or selected"
+          },
+          {
+            "code": 203,
+            "icon": "error",
+            "caption": "no contract available, we receive no data from tibber"
+          },
+          {
+            "code": 205,
+            "icon": "error",
+            "caption": "Too many requests. Your IP is now temporarily banned for calling API for a few minutes."
+          },
+          {
+            "code": 210,
+            "icon": "error",
+            "caption": "Token invalid"
+          }
+    ]
+}
