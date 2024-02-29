@@ -324,8 +324,6 @@ require_once __DIR__ . '/../libs/functions.php';
 
 		private function Update_Ahead_Price_Data()
 		{
-			if ($this->ReadPropertyBoolean('Price_log') == true){
-
 				$Ahead_Price_Data = [];
 				$h = date('G');
 				foreach (json_decode($this->ReadAttributeString('Price_Array'),true) as $data => $value)
@@ -340,8 +338,6 @@ require_once __DIR__ . '/../libs/functions.php';
 				$Ahead_Price_Data = json_encode($Ahead_Price_Data);
 				$this->UpdateVisualizationValue($Ahead_Price_Data);
 				$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
-	
-			}
 		}
 
 		private function LogAheadPrices($result_array)
@@ -526,10 +522,10 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterVariableFloat("act_price", $this->Translate('actual price'), 'Tibber.price.cent', 0);
 			$this->RegisterVariableInteger("act_level", $this->Translate('actual price level'), 'Tibber.price.level', 0);
 			$this->RegisterVariableBoolean("RT_enabled", $this->Translate('realtime available'), '', 0);
+			$this->RegisterVariableString("Ahead_Price_Data", $this->Translate("Ahead price data for optimizer and tilevisu"), "~TextBox", 0);
 
 			if ($this->ReadPropertyBoolean('Price_log') == true){
 				$this->RegisterVariableFloat("Ahead_Price", $this->Translate('day ahead price helper variable'), 'Tibber.price.cent', 0);
-				$this->RegisterVariableString("Ahead_Price_Data", $this->Translate("Ahead price data for optimizer and tilevisu"), "~TextBox", 0);
 				$this->SetLogging();
 			}
 
