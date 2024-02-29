@@ -27,12 +27,12 @@ Mit diesem Modul können die Informationen abgerufen werden welche von der Tibbe
 
 ### 3. Software-Installation
 
-* Über den Module Store das 'Tibber'-Modul installieren.
+* Über den Module Store das 'Tibber V.2'-Modul installieren.
 * Alternativ über das Module Control folgende URL hinzufügen https://github.com/lorbetzki/net.lorbetzki.tibber.v2.git
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
- Unter 'Instanz hinzufügen' kann die 'Tibber'-Instanz mithilfe des Schnellfilters gefunden werden.  
+ Unter 'Instanz hinzufügen' kann die 'Tibber V.2'-Instanz mithilfe des Schnellfilters gefunden werden.  
 	- Weitere Informationen zum Hinzufügen von Instanzen in der [Dokumentation der Instanzen](https://www.symcon.de/service/dokumentation/konzepte/instanzen/#Instanz_hinzufügen)
 
 __Konfigurationsseite__:

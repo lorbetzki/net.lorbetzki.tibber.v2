@@ -33,12 +33,12 @@ Einen genauen Funktionsumfang des jeweiligen Moduls wird in der Modul Readme det
 
 ## 4. Module
 
-### 4.1. Tibber
+### 4.1. Tibber V.2
 
 Mit dem Tibber Modul kann die normale Tibber API abgefragt werden.
 Genaue Infos sind in der Modul Readme vorhanden
 
-### 4.2. Tibber Realtime
+### 4.2. Tibber Realtime V.2
 
 Mit dem Tibber Realtime Modul kann optional der Realtime-Stream von Tibber abgefragt werde, sofern ein Tibber Pulse Zähler mit dem Tibber-Account verknüpft ist.
 Genaue Infos sind in der Modul Readme vorhanden
