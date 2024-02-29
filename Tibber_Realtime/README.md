@@ -43,7 +43,7 @@ Währung
 
 ### 2. Voraussetzungen
 
-- Symcon ab Version 6.3
+- Symcon ab Version 7.1
 - Tibber Account
 - Tibber Api Token -> [Tibber Developer](https://developer.tibber.com/) -> dort auf Sign-in, meldet euch mit eurem Tibber Account an und erstellt dort den Access-Token.
 - Tibber Pulse für Realtime Daten
@@ -51,7 +51,7 @@ Währung
 ### 3. Software-Installation
 
 * Über den Module Store das 'Tibber'-Modul installieren.
-* Alternativ über das Module Control folgende URL hinzufügen https://github.com/lorbetzki/net.lorbetzki.tibber.git
+* Alternativ über das Module Control folgende URL hinzufügen https://github.com/lorbetzki/net.lorbetzki.tibber.v2.git
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 

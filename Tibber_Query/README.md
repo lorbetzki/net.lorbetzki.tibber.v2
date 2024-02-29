@@ -9,6 +9,7 @@ Mit diesem Modul können die Informationen abgerufen werden welche von der Tibbe
 4. [Einrichten der Instanzen in IP-Symcon](#4-einrichten-der-instanzen-in-ip-symcon)
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [PHP-Befehlsreferenz](#6-php-befehlsreferenz)
+7. [Symcon Kachel](#7-symcon-kachel)
 
 ### 1. Funktionsumfang
 
@@ -20,14 +21,14 @@ Mit diesem Modul können die Informationen abgerufen werden welche von der Tibbe
  
 ### 2. Voraussetzungen
 
-- Symcon ab Version 6.3
+- Symcon ab Version 7.1
 - Tibber Account UND Vertrag zum Heim. Ohne Vertrag bekommen wir keine Preisdaten!
 - Tibber Api Token -> [Tibber Developer](https://developer.tibber.com/) -> dort auf Sign-in, meldet euch mit eurem Tibber Account an und erstellt dort den Access-Token.
 
 ### 3. Software-Installation
 
 * Über den Module Store das 'Tibber'-Modul installieren.
-* Alternativ über das Module Control folgende URL hinzufügen https://github.com/lorbetzki/net.lorbetzki.tibber.git
+* Alternativ über das Module Control folgende URL hinzufügen https://github.com/lorbetzki/net.lorbetzki.tibber.v2.git
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -203,3 +204,7 @@ kann für externe Scripte eingesetzt werden. Gibt das abgeholte Preis Array raus
 
 Beispiel:
 `TIBBER_PriceArray(12345);`
+
+### 7. Symcon Kachel
+Mit der Version 2 von diesem Modul gibt es auch eine Preisvorschau Kachel. Um diese in der Visu anzeigen zu können wird nur ein Link der Tibber Query Instanz in der Visu Kategorie benötigt. 
+![grafik](../docs/preview.png?raw=true)
