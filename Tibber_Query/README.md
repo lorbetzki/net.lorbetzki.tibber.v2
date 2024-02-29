@@ -206,5 +206,6 @@ Beispiel:
 `TIBBER_PriceArray(12345);`
 
 ### 7. Symcon Kachel
-Mit der Version 2 von diesem Modul gibt es auch eine Preisvorschau Kachel. Um diese in der Visu anzeigen zu können wird nur ein Link der Tibber Query Instanz in der Visu Kategorie benötigt. 
+Mit der Version 2 von diesem Modul gibt es auch eine Preisvorschau Kachel. Um diese in der Visu anzeigen zu können wird nur ein Link der Tibber Query Instanz in der Visu Kategorie benötigt. Meinen Dank geht an [Da8ter](https://github.com/da8ter) Kachelsammlung.
 ![grafik](../docs/preview.png?raw=true)
+
