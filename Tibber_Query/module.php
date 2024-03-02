@@ -6,6 +6,7 @@ require_once __DIR__ . '/../libs/functions.php';
 	class Tibber extends IPSModule
 	{
 		use TibberHelper;
+		
 		public function Create()
 		{
 			//Never delete this line!
@@ -16,23 +17,24 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterPropertyString("Api", 'https://api.tibber.com/v1-beta/gql');
 			$this->RegisterPropertyString("Home_ID",'0');
 			$this->RegisterPropertyBoolean("Price_log", false);
-			$this->RegisterPropertyBoolean("DayAhead_Chart", false);
-			$this->RegisterPropertyBoolean("Consumption_log", false);
 			$this->RegisterPropertyBoolean("Price_Variables", false);
-			
-			$this->RegisterPropertyBoolean("Statistics", false);
 
+			$this->RegisterPropertyBoolean("Statistics", false);
+			$this->RegisterPropertyBoolean("Ahead_Price_Data_bool", false);
+			
 			$this->RegisterAttributeString("Homes", "");
 			$this->RegisterAttributeString("Price_Array", '');
 			$this->RegisterAttributeInteger("ar_handler", 0);
 			$this->RegisterAttributeBoolean("EEX_Received", false);
-
+			$this->RegisterAttributeString('AVGPrice', '');
+			$this->RegisterAttributeString('Ahead_Price_Data', '');
+			
 			$this->SetVisualizationType(1);
 
 			//--- Register Timer
 			$this->RegisterTimer("UpdateTimerPrice", 0, 'TIBV2_GetPriceData($_IPS[\'TARGET\']);');
 			$this->RegisterTimer("UpdateTimerActPrice", 0, 'TIBV2_SetActualPrice($_IPS[\'TARGET\']);');
-			
+
 		}
 
 		public function Destroy()
@@ -70,6 +72,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			{
 				$this->SetStatus(104); // instanz deaktiveren
 			}
+
 		}
 
 		
@@ -324,20 +327,74 @@ require_once __DIR__ . '/../libs/functions.php';
 
 		private function Update_Ahead_Price_Data()
 		{
+			$this->SendDebug(__FUNCTION__, $this->ReadAttributeString("Price_Array"), 0);
+
+			if ($this->ReadAttributeString("Price_Array") != '')
+			{
 				$Ahead_Price_Data = [];
 				$h = date('G');
+				$lastHour = "";
+				$AVGPrice = array();
+				$dateIndex = 0;
 				foreach (json_decode($this->ReadAttributeString('Price_Array'),true) as $data => $value)
 				{
+
+					if (empty($value['start']))
+					{
+						$valueStart = strtotime("+1 hour",$lastHour); 
+						$lastHour = $valueStart; 
+					}
+					else
+					{
+						$valueStart = $value['start']; 
+						$lastHour = $valueStart;
+					}
+
+					if (empty($value['end']))
+					{
+						$valueEnd = strtotime("+1 hour",$valueStart); 	
+					}
+					else
+					{
+						$valueEnd = $value['end'];
+					}
+
+					if (empty($value['Price']))
+					{
+						$valuePrice = 0;
+					}
+					else
+					{
+						$valuePrice = $value['Price'];
+						if ($data >= $h)
+						{
+							if ($dateIndex >=24){ break; }
+							$AVGPrice[] = $valuePrice;
+							$dateIndex++;
+						}
+					}					
+
 					if ($data >= $h)
 					{
-						$Ahead_Price_Data[] = [ 'start' => $value['start'],
-												'end'   => $value['end'],
-												'price' => $value['Price'] ];
+						$Ahead_Price_Data[] = [ 'start' => $valueStart,
+												'end'   => $valueEnd,
+												'price' => $valuePrice ];
 					}
+					
 				}
+	
+				$this->WriteAttributeString('AVGPrice',json_encode($AVGPrice));
+				//echo "Durchschnitt: ".round(array_sum($AVGPrice)/count($AVGPrice),2)."\n Min: ".Min($AVGPrice)."\n Max: ".max($AVGPrice)."\n Aktuell: ".$AVGPrice[0]."\n";
+				//print_r($AVGPrice);
+				// remove NULL Arrays
 				$Ahead_Price_Data = json_encode($Ahead_Price_Data);
+				$this->SendDebug(__FUNCTION__, json_encode($Ahead_Price_Data), 0);
 				$this->UpdateVisualizationValue($Ahead_Price_Data);
-				$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
+				$this->WriteAttributeString('Ahead_Price_Data', $Ahead_Price_Data);
+				if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool')){
+					$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
+				}
+			}
 		}
 
 		private function LogAheadPrices($result_array)
@@ -522,7 +579,14 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterVariableFloat("act_price", $this->Translate('actual price'), 'Tibber.price.cent', 0);
 			$this->RegisterVariableInteger("act_level", $this->Translate('actual price level'), 'Tibber.price.level', 0);
 			$this->RegisterVariableBoolean("RT_enabled", $this->Translate('realtime available'), '', 0);
-			$this->RegisterVariableString("Ahead_Price_Data", $this->Translate("Ahead price data for optimizer and tilevisu"), "~TextBox", 0);
+			
+			if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool') == true){
+				$this->RegisterVariableString("Ahead_Price_Data", $this->Translate("Ahead price data variable for energy optimizer"), "~TextBox", 0);
+			}
+			else
+			{
+				$this->UnregisterVariable('Ahead_Price_Data');
+			}
 
 			if ($this->ReadPropertyBoolean('Price_log') == true){
 				$this->RegisterVariableFloat("Ahead_Price", $this->Translate('day ahead price helper variable'), 'Tibber.price.cent', 0);
@@ -764,10 +828,21 @@ require_once __DIR__ . '/../libs/functions.php';
             // Add static HTML content from file to make editing easier
             $module = file_get_contents(__DIR__ . '/module.html');
 
-            // Inject current values
-            $module = str_replace('%Ahead_Price_Data%', $this->GetValue('Ahead_Price_Data'), $module);
+			$AVGPriceVal = json_decode($this->ReadAttributeString("AVGPrice"),true);
+			$AVGPrice = round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+			$minPrice = min($AVGPriceVal);
+			$maxPrice = max($AVGPriceVal);
+			$actPrice = $AVGPriceVal[0];
 
-            // Return everything to render our fancy tile!
+            // Inject current values
+			$module = str_replace('%AVGPrice%', "$AVGPrice", $module);
+			$module = str_replace('%minPrice%', "$minPrice", $module);
+			$module = str_replace('%maxPrice%', "$maxPrice", $module);
+			$module = str_replace('%actPrice%', "$actPrice", $module);
+            $module = str_replace('%Ahead_Price_Data%', $this->ReadAttributeString('Ahead_Price_Data'), $module);
+
+			// Return everything to render our fancy tile!
             return $module;
-        }
+        }	
+
 	}

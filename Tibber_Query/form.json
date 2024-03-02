@@ -16,20 +16,8 @@
                     "caption": "Select Home",
                     "visible": false,
                     "options": [ {"caption" : "Select Home", "value":"0"} ]
-                },
-                {
-                    "type": "Button",
-                    "label": "Select Home",
-                    "onClick": "IPS_RequestAction($id, 'GetHomesData', '');",
-                    "enabled": false,
-                    "visible": false
-                    }
+                }
             ]
-        },
-        {   "type": "CheckBox",
-            "name": "Consumption_log",
-            "caption": "Logging consumption data",
-            "visible": false
         },
         {
             "type": "ExpansionPanel",
@@ -59,6 +47,12 @@
                         "visible": true
                     }
                 ]
+        },
+        {
+            "type": "CheckBox",
+            "name": "Ahead_Price_Data_bool",
+            "caption": "Create price ahead variable for energy optimizer",
+            "visible": true
         },
         {   "type": "CheckBox",
             "name": "InstanceActive",

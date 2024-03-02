@@ -9,7 +9,7 @@
             "activate Instance": "aktiviere Instanz",
             "actual price":"Aktueller Preis",
             "actual price level":"Aktueller Preis Level",
-            "day ahead price helper variable":"Day Ahead Preis Hilfsvariable",
+            "day ahead price helper variable":"Chart - Hilfsvariable für Preisvorschau",
             "realtime available":"Realtime verfügbar",
             "Price Array":"Preis Array",
             "Today": "Heute",
@@ -21,7 +21,7 @@
             "Logging consumption data":"Verbrauchsdaten Loggen",
             "Price Data -> Variable Settings":"Preis Daten -> Variablen Einstellungen",
             "Log price data variable":"Preisdatenvariable loggen",
-            "Price - create variables per hour (24 for current day & 24 for day ahead day)":"Preis - Variablen pro Stunde anlegen (24 für aktuellen Tag & 24 für Day Ahead Tag)",
+            "Price - create variables per hour (24 for current day & 24 for day ahead day)":"Preis - Variablen pro Stunde anlegen (24 für aktuellen Tag & 24 für die Preisvorschau)",
             "Price - Create array -> For use in scripts and other modules":"Preis - Array anlegen -> Zur Nutzung in Scripten und anderen Modulen",
             "Retrieve price data":"Preisdaten abrufen",
             "Retrieve Home ID":"Heim ID abrufen",
@@ -47,7 +47,8 @@
             "no contract available, we receive no data from tibber":"kein Vertrag vorhanden, wir bekommen keine Preisdaten.",
             "Too many requests. Your IP is now temporarily banned for calling API for a few minutes.":"Zu viele Anfragen. Die IP ist temporär für einige minuten geblockt.",
             " o clock": " Uhr",
-            "Ahead price data for optimizer and tilevisu":"Preisvorschaudaten für Optimierer und Kachelvisu"
+            "Ahead price data variable for energy optimizer":"Preisvorschaudaten für Energie Optimierer",
+            "Create price ahead variable for energy optimizer":"erstelle Variable für Energie Optimierer"
         }
     }
 }
