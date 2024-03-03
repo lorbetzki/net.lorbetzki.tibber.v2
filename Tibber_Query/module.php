@@ -836,7 +836,7 @@ require_once __DIR__ . '/../libs/functions.php';
             return $module . $initialHandling;
         }	
 
-		public function GetFullUpdateMessage()
+		private function GetFullUpdateMessage()
 		{
 			$result = []; 
 			$AVGPriceVal = json_decode($this->ReadAttributeString("AVGPrice"),true);
