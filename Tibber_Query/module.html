@@ -56,6 +56,7 @@
             border-radius: 3px;
         }
     </style>
+  
 </head>
 <body>
     <div id="bars">
@@ -65,10 +66,10 @@
         <!-- Will be filled through JavaScript -->
     </div>
     <div id="prices">  
-        <span>Aktuell: <span id="price_cur">%actPrice%&nbsp;ct</span></span>
-        <span style="color: green;">&nbsp;&nbsp;&nbsp;&darr; <span id="price_min">%minPrice%&nbsp;ct</span></span>
-        <span style="color: red;">&nbsp;&nbsp;&nbsp;&uarr; <span id="price_max">%maxPrice%&nbsp;ct</span></span>
-        <span>&nbsp;&nbsp;&nbsp;&Oslash;<span id="price_avg">%AVGPrice%&nbsp;ct</span></span>
+        <span>Aktuell: <span id="price_cur"></span></span>
+        <span style="color: green;">&nbsp;&nbsp;&nbsp;&darr; <span id="price_min">&nbsp;ct</span></span>
+        <span style="color: red;">&nbsp;&nbsp;&nbsp;&uarr; <span id="price_max">&nbsp;ct</span></span>
+        <span>&nbsp;&nbsp;&nbsp;&Oslash;<span id="price_avg">&nbsp;ct</span></span>
 
     </div>
     <script type="text/javascript" charset="UTF-8">
@@ -89,50 +90,78 @@
             hours.appendChild(hour);
         }
 
-        handleMessage('%Ahead_Price_Data%');
+        //handleMessage('%Ahead_Price_Data%');
 
         function handleMessage(message) {
+
+
             for(let i = 0; i < 24; i++) {
                 document.getElementById('hour_' + i).className = "";
             }
 
-            const currentHour = new Date().getHours();
-            const data = JSON.parse(message);
-
             let min_price = Number.MAX_VALUE;
             let max_price = Number.MIN_VALUE;
             let avg_price = 0;
-            for(let row of data) {
-                min_price = Math.min(min_price, row.price);
-                max_price = Math.max(max_price, row.price);
-                avg_price += row.price;
-            }
-            avg_price = avg_price / data.length;
 
-            let max_height = 100 / max_price;
+            const currentHour = new Date().getHours();
+            const data = JSON.parse(message);
 
-            let index = 0;
-            for(let row of data) {
-                let hour = (new Date(row.start*1000)).getHours();
-                // console.log(row.start, hour, row.price);
-                document.getElementById('hour_' + index).innerText = hour;
-                if (currentHour === hour) {
-                    document.getElementById('hour_' + index).className = "current";
-                    document.getElementById('price_cur').innerHTML = row.price.toFixed(2) + '&nbsp;ct';
-                }
-                if (row.price === 0) {
-                    var bar = document.getElementById('bar_' + index);
-                    bar.style.height = '100%';
-                    bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
-                    bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
-                } else {
-                    document.getElementById('bar_' + index).style.height = Math.floor(row.price * max_height) + '%';
-                }                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
-                index++;
-                if (index >= 24) {
+            for (const parameter in data) {
+            //console.log('Aktueller Parameter:', parameter, 'Wert:', decodedData[parameter]);
+            let max_height = 100 / data['price_max'];
+
+            const element = document.getElementById(parameter);
+
+                // Abhängig vom Parameter werden allerdings verschiedene Werte angepasst
+                switch (parameter) {
+                    case 'price_cur':
+                        element.innerHTML = data[parameter] + '&nbsp;ct';
+                        // &nbsp;ct
                     break;
+                    case 'price_min':
+                        element.innerHTML = data[parameter] + '&nbsp;ct';
+                    break;
+                    case 'price_max':
+                        element.innerHTML = data[parameter] + '&nbsp;ct';
+                    break;
+                    case 'price_avg':
+                        element.innerHTML = data[parameter] + '&nbsp;ct';
+                    break;
+                    case 'Ahead_Price_Data':
+
+                    let index = 0;
+                        for(let row of data[parameter]) {
+                                let hour = (new Date(row.start*1000)).getHours();
+                                // console.log(row.start, hour, row.price);
+                                document.getElementById('hour_' + index).innerText = hour;
+                                if (currentHour === hour) {
+                                    document.getElementById('hour_' + index).className = "current";
+                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(2) + '&nbsp;ct';
+                                }
+                                if (row.price === 0) {
+                                    var bar = document.getElementById('bar_' + index);
+                                    bar.style.height = '100%';
+                                    bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
+                                    bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
+                                } else {
+                                    document.getElementById('bar_' + index).style.height = Math.floor(row.price * max_height) + '%';
+                                }                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
+                                index++;
+                                if (index >= 24) {
+                                    break;
+                                }
+                            }                 
+                        break;
+
+                    default:
+                        //console.log('Setze innerHTML für', parameter);
+                        // Setze innerHTML nur, wenn das Element gefunden wurde
+                        //element.innerHTML = data[parameter];
+                        break;
                 }
-            }
+
+        }
+            
         }
     </script>
 </body>

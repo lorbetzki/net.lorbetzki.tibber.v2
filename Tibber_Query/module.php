@@ -72,9 +72,10 @@ require_once __DIR__ . '/../libs/functions.php';
 			{
 				$this->SetStatus(104); // instanz deaktiveren
 			}
+			// Tile Visu update
+			$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 
 		}
-
 		
 		public function GetPriceData()
 		{
@@ -394,6 +395,7 @@ require_once __DIR__ . '/../libs/functions.php';
 				if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool')){
 					$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
 				}
+				$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 			}
 		}
 
@@ -825,24 +827,31 @@ require_once __DIR__ . '/../libs/functions.php';
 
 		public function GetVisualizationTile()
         {
+			$initialHandling = '<script>handleMessage(' . json_encode($this->GetFullUpdateMessage()) . ')</script>';
+
             // Add static HTML content from file to make editing easier
             $module = file_get_contents(__DIR__ . '/module.html');
 
-			$AVGPriceVal = json_decode($this->ReadAttributeString("AVGPrice"),true);
-			$AVGPrice = round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
-			$minPrice = min($AVGPriceVal);
-			$maxPrice = max($AVGPriceVal);
-			$actPrice = $AVGPriceVal[0];
-
-            // Inject current values
-			$module = str_replace('%AVGPrice%', "$AVGPrice", $module);
-			$module = str_replace('%minPrice%', "$minPrice", $module);
-			$module = str_replace('%maxPrice%', "$maxPrice", $module);
-			$module = str_replace('%actPrice%', "$actPrice", $module);
-            $module = str_replace('%Ahead_Price_Data%', $this->ReadAttributeString('Ahead_Price_Data'), $module);
-
 			// Return everything to render our fancy tile!
-            return $module;
+            return $module . $initialHandling;
         }	
 
+		public function GetFullUpdateMessage()
+		{
+			$result = []; 
+			$AVGPriceVal = json_decode($this->ReadAttributeString("AVGPrice"),true);
+			$AVGPrice = round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+			$minPrice = round(min($AVGPriceVal),2);
+			$maxPrice = round(max($AVGPriceVal),2);
+			$actPrice = $AVGPriceVal[0];
+
+			$result['price_avg'] = $AVGPrice;
+			$result['price_min'] = $minPrice;
+			$result['price_max'] = $maxPrice;
+			$result['price_cur'] = $actPrice;
+            $result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+            
+			return json_encode($result) ;
+		}
+		
 	}
