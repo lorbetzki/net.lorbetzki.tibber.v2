@@ -67,52 +67,11 @@ Realtime Verfügbar | BOOL | Gibt an, ob ein Pulse oder anderer Smartmeter in Ti
 Day Ahead Chart | CHART | Multichart mit Anzeige vergangener und zukünftigen Preise
 Heute 0 bis 1 Uhr | FLOAT | Preisvariable pro Stunde 
 Heute 1 bis 2 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 2 bis 3 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 3 bis 4 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 4 bis 5 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 5 bis 6 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 6 bis 7 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 7 bis 8 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 8 bis 9 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 9 bis 10 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 10 bis 11 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 11 bis 12 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 12 bis 13 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 13 bis 14 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 14 bis 15 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 15 bis 16 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 16 bis 17 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 17 bis 18 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 18 bis 19 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 19 bis 20 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 20 bis 21 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 21 bis 22 Uhr | FLOAT | Preisvariable pro Stunde 
-Heute 22 bis 23 Uhr | FLOAT | Preisvariable pro Stunde 
+... | ... | ...
 Heute 23 bis 24 Uhr | FLOAT | Preisvariable pro Stunde 
 Morgen 0 bis 1 Uhr | FLOAT | Preisvariable pro Stunde 
 Morgen 1 bis 2 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 2 bis 3 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 3 bis 4 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 4 bis 5 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 5 bis 6 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 6 bis 7 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 7 bis 8 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 8 bis 9 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 9 bis 10 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 10 bis 11 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 11 bis 12 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 12 bis 13 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 13 bis 14 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 14 bis 15 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 15 bis 16 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 16 bis 17 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 17 bis 18 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 18 bis 19 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 19 bis 20 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 20 bis 21 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 21 bis 22 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 22 bis 23 Uhr | FLOAT | Preisvariable pro Stunde 
-Morgen 23 bis 24 Uhr | FLOAT | Preisvariable pro Stunde 
+... | ... | ...
 Morgen 23 bis 24 Uhr | FLOAT | Preisvariable pro Stunde 
 min/max Preisspanne für heute | FLOAT | Preisspanne, also die differenz zwischen min und max Wert
 max. Preis für heute  | FLOAT | der höchste Tagespreis 
@@ -129,6 +88,7 @@ Anzahl günstiger Preis | INT | Anzahl des Preises
 Anzahl normaler Preis | INT | Anzahl des Preises
 Anzahl teurer Preis | INT | Anzahl des Preises
 Anzahl sehr teurer Preis | INT | Anzahl des Preises
+Preisvorschaudaten für Energie Optimierer | String | erstellt eine Variable die in den Symcon Energie Optimierer eingebunden werden kann.
 
 #### Profile
 
