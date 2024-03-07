@@ -854,7 +854,7 @@ require_once __DIR__ . '/../libs/functions.php';
             return $module . $initialHandling;
         }	
 
-		public function GetFullUpdateMessage()
+		private function GetFullUpdateMessage()
 		{
 			$result = [];
 			
@@ -882,8 +882,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['FCHour'] 	 = $FCHour;
 			$result['BGCHour'] 	 = $BGCHour;
 
-            //$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
-            $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
+            $result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+            //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 
 
 
