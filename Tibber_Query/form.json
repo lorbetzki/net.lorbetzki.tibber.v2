@@ -24,18 +24,12 @@
             "caption": "Price Data -> Variable Settings",
             "expanded": true,
             "items": [
-                    { 
-                        "type": "RowLayout",
-                        "items": [
-                            {   "type": "CheckBox",
-                                "name": "Price_log",
-                                "caption": "Log price data variable",
-                                "visible": true,
-                                "enabled": true
-                            }
-                        ]
-                    },
-                    
+                    {   "type": "CheckBox",
+                        "name": "Price_log",
+                        "caption": "Log price data variable",
+                        "visible": true,
+                        "enabled": true
+                    },            
                     {   "type": "CheckBox",
                         "name": "Price_Variables",
                         "caption": "Price - create variables per hour (24 for current day & 24 for day ahead day)",
@@ -57,6 +51,53 @@
         {   "type": "CheckBox",
             "name": "InstanceActive",
             "caption": "activate Instance"
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "advanced settings",
+            "expanded": false,
+            "items": [
+                    
+                    {   "type": "NumberSpinner",
+                        "name": "FontSizeBars",
+                        "caption": "set fontsize of the prices of the bars",
+                        "digits": 1,
+                        "minimum": 0.5,
+                        "maximum": 10.0
+                    },
+                    {
+                        "type": "SelectColor",
+                        "allowTransparent": "false",
+                        "name": "FontColorBars",
+                        "caption": "Font color bars"
+                    },
+                    {   "type": "NumberSpinner",
+                        "name": "FontSizeHours",
+                        "caption": "set fontsize of the prices of the hours",
+                        "digits": 1,
+                        "minimum": 0.5,
+                        "maximum": 10.0 
+                    },
+                    {
+                        "type": "SelectColor",
+                        "allowTransparent": "false",
+                        "name": "FontColorHour",
+                        "caption": "Fontcolor actually hour"
+                    },
+                    {
+                        "type": "SelectColor",
+                        "allowTransparent": "false",
+                        "name": "BGColorHour",
+                        "caption": "backgroundcolor of the actually hour"
+                    },
+                    {   "type": "NumberSpinner",
+                        "name": "FontSizePrices",
+                        "caption": "set fontsize of the prices of the prices",
+                        "digits": 1, 
+                        "minimum": 0.5,
+                        "maximum": 10.0
+                    }
+                ]
         }
            
     ],

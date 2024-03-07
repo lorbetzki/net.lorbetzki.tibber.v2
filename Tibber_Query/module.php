@@ -28,7 +28,14 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterAttributeBoolean("EEX_Received", false);
 			$this->RegisterAttributeString('AVGPrice', '');
 			$this->RegisterAttributeString('Ahead_Price_Data', '');
-			
+
+			$this->RegisterPropertyFloat("FontSizeBars", '1.0');
+			$this->RegisterPropertyFloat("FontSizeHours", '1.0');
+			$this->RegisterPropertyFloat("FontSizePrices", '1.0');
+
+			$this->RegisterPropertyInteger("FontColorBars", 0xFFFFFF);
+			$this->RegisterPropertyInteger("FontColorHour", 0xFFFFFF);
+			$this->RegisterPropertyInteger("BGColorHour", 0x808080);
 			$this->SetVisualizationType(1);
 
 			//--- Register Timer
@@ -324,6 +331,10 @@ require_once __DIR__ . '/../libs/functions.php';
 			if ($this->ReadPropertyBoolean('Price_log') == true){
 				$this->LogAheadPrices($result_array);
 			}
+
+			//update tile Visu
+			$this->Update_Ahead_Price_Data();
+
 		}
 
 		private function Update_Ahead_Price_Data()
@@ -373,24 +384,31 @@ require_once __DIR__ . '/../libs/functions.php';
 							$AVGPrice[] = $valuePrice;
 							$dateIndex++;
 						}
-					}					
+					}
+					if (empty($value['Level']))					
+					{
+						$valueLevel = "";
+					}
+					else
+					{
+						$valueLevel = $value['Level'];
+					}
 
 					if ($data >= $h)
 					{
 						$Ahead_Price_Data[] = [ 'start' => $valueStart,
 												'end'   => $valueEnd,
-												'price' => $valuePrice ];
+												'price' => round($valuePrice,2),
+												'level' => $valueLevel
+											];
 					}
 					
 				}
 	
 				$this->WriteAttributeString('AVGPrice',json_encode($AVGPrice));
-				//echo "Durchschnitt: ".round(array_sum($AVGPrice)/count($AVGPrice),2)."\n Min: ".Min($AVGPrice)."\n Max: ".max($AVGPrice)."\n Aktuell: ".$AVGPrice[0]."\n";
-				//print_r($AVGPrice);
-				// remove NULL Arrays
 				$Ahead_Price_Data = json_encode($Ahead_Price_Data);
 				$this->SendDebug(__FUNCTION__, json_encode($Ahead_Price_Data), 0);
-				$this->UpdateVisualizationValue($Ahead_Price_Data);
+
 				$this->WriteAttributeString('Ahead_Price_Data', $Ahead_Price_Data);
 				if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool')){
 					$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
@@ -836,21 +854,39 @@ require_once __DIR__ . '/../libs/functions.php';
             return $module . $initialHandling;
         }	
 
-		private function GetFullUpdateMessage()
+		public function GetFullUpdateMessage()
 		{
-			$result = []; 
-			$AVGPriceVal = json_decode($this->ReadAttributeString("AVGPrice"),true);
-			$AVGPrice = round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
-			$minPrice = round(min($AVGPriceVal),2);
-			$maxPrice = round(max($AVGPriceVal),2);
-			$actPrice = $AVGPriceVal[0];
+			$result = [];
+			
+			$FSBars		 = $this->ReadPropertyFloat("FontSizeBars");
+			$FSHours	 = $this->ReadPropertyFloat("FontSizeHours");
+			$FSPrices	 = $this->ReadPropertyFloat("FontSizePrices");
+			$FCBars		 = sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
+			$FCHour		 = sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
+			$BGCHour	 = sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
+
+			$AVGPriceVal	= json_decode($this->ReadAttributeString("AVGPrice"),true);
+			$AVGPrice     	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+			$minPrice 		= round(min($AVGPriceVal),2);
+			$maxPrice		= round(max($AVGPriceVal),2);
+			$actPrice		= $AVGPriceVal[0];
 
 			$result['price_avg'] = $AVGPrice;
 			$result['price_min'] = $minPrice;
 			$result['price_max'] = $maxPrice;
 			$result['price_cur'] = $actPrice;
-            $result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
-            
+			$result['FSBars'] 	 = $FSBars;
+			$result['FSHours'] 	 = $FSHours;
+			$result['FSPrices']  = $FSPrices;
+			$result['FCBars'] 	 = $FCBars;
+			$result['FCHour'] 	 = $FCHour;
+			$result['BGCHour'] 	 = $BGCHour;
+
+            //$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+            $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
+
+
+
 			return json_encode($result) ;
 		}
 		

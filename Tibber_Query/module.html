@@ -15,8 +15,8 @@
 
         #prices {
             height: 20px;
-            font-size: 12px;
             margin-left: 5px;
+            font-size: var(--FSPrices);
         }
 
         #bars > div {
@@ -24,11 +24,10 @@
             margin-bottom: 1px;
             margin-left: 1px;
             margin-right: 1px;
-            background-image: linear-gradient(to top, #28cdab 5px, #1ecda3 10px, #17cd9a 20px, #17cd90 35px, #1ccd86 55px, #45cb71 80px, #5fc85c 105px, #76c546 120px, #9cbd1f 135px, #bfb100 150px, #e0a300 165px, #ff9000 180px);
             text-align: right;
-            font-size: 12px;
+            font-size: var(--FSBars);
             writing-mode: vertical-lr;
-            color: #ffffff;
+            color: var(--FCBars);
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             display: flex;
@@ -41,7 +40,7 @@
             margin-bottom: 5px;
             margin-top: 5px;
             text-align: center;
-            font-size: 12px;
+            font-size: var(--FSHours);
         }
 
         #hours > div {
@@ -51,8 +50,8 @@
         }
 
         #hours > div.current {
-            background-color: grey;
-            color: white;
+            background-color: var(--BGCHour);
+            color: var(--FCHour);
             border-radius: 3px;
         }
     </style>
@@ -111,6 +110,7 @@
             let max_height = 100 / data['price_max'];
 
             const element = document.getElementById(parameter);
+            var root = document.documentElement;
 
                 // Abhängig vom Parameter werden allerdings verschiedene Werte angepasst
                 switch (parameter) {
@@ -127,6 +127,26 @@
                     case 'price_avg':
                         element.innerHTML = data[parameter] + '&nbsp;ct';
                     break;
+                    case 'FSBars':
+                         root.style.setProperty('--FSBars', data[parameter] + 'em');
+                         console.log('Setze innerHTML für', parameter);
+                    break;
+                    case 'FSHours':
+                        root.style.setProperty('--FSHours', data[parameter] + 'em');
+                    break;
+                    case 'FSPrices':
+                        root.style.setProperty('--FSPrices', data[parameter] + 'em');
+                    break;
+                    case 'FCBars':
+                        root.style.setProperty('--FCBars', data[parameter]);
+                    break;  
+                    case 'FCHour':
+                        root.style.setProperty('--FCHour', data[parameter]);
+                    break;  
+                    case 'BGCHour':
+                        root.style.setProperty('--BGCHour', data[parameter]);
+                    break;
+
                     case 'Ahead_Price_Data':
 
                     let index = 0;
@@ -143,9 +163,23 @@
                                     bar.style.height = '100%';
                                     bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
+                                    bar.style.color = '#FFFFFF';
                                 } else {
                                     document.getElementById('bar_' + index).style.height = Math.floor(row.price * max_height) + '%';
                                 }                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
+                                switch (row.level){
+                                    case "NORMAL":
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 125%)';
+                                    break;
+                                    case "CHEAP":
+                                    case "VERY_CHEAP":
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 300%)    ';
+                                    break;
+                                    case "EXPENSIVE":
+                                    case "VERY_EXPENSIVE":
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 50%)';
+                                    break;
+                                }
                                 index++;
                                 if (index >= 24) {
                                     break;
