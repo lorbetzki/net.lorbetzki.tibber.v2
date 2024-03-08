@@ -36,6 +36,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterPropertyInteger("FontColorBars", 0xFFFFFF);
 			$this->RegisterPropertyInteger("FontColorHour", 0xFFFFFF);
 			$this->RegisterPropertyInteger("BGColorHour", 0x808080);
+			$this->RegisterPropertyInteger("BorderRadius", 5);
+
 			$this->SetVisualizationType(1);
 
 			//--- Register Timer
@@ -857,37 +859,51 @@ require_once __DIR__ . '/../libs/functions.php';
 		private function GetFullUpdateMessage()
 		{
 			$result = [];
-			
-			$FSBars		 = $this->ReadPropertyFloat("FontSizeBars");
-			$FSHours	 = $this->ReadPropertyFloat("FontSizeHours");
-			$FSPrices	 = $this->ReadPropertyFloat("FontSizePrices");
-			$FCBars		 = sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
-			$FCHour		 = sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
-			$BGCHour	 = sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
 
 			$AVGPriceVal	= json_decode($this->ReadAttributeString("AVGPrice"),true);
-			$AVGPrice     	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
-			$minPrice 		= round(min($AVGPriceVal),2);
-			$maxPrice		= round(max($AVGPriceVal),2);
-			$actPrice		= $AVGPriceVal[0];
-
-			$result['price_avg'] = $AVGPrice;
-			$result['price_min'] = $minPrice;
-			$result['price_max'] = $maxPrice;
-			$result['price_cur'] = $actPrice;
-			$result['FSBars'] 	 = $FSBars;
-			$result['FSHours'] 	 = $FSHours;
-			$result['FSPrices']  = $FSPrices;
-			$result['FCBars'] 	 = $FCBars;
-			$result['FCHour'] 	 = $FCHour;
-			$result['BGCHour'] 	 = $BGCHour;
+			
+			$result['price_avg'] 	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+			$result['price_min'] 	= round(min($AVGPriceVal),2);
+			$result['price_max'] 	= round(max($AVGPriceVal),2);
+			$result['price_cur'] 	= $AVGPriceVal[0];
+			$result['FSBars'] 	 	= $this->ReadPropertyFloat("FontSizeBars");
+			$result['FSHours'] 	 	= $this->ReadPropertyFloat("FontSizeHours");
+			$result['FSPrices']  	= $this->ReadPropertyFloat("FontSizePrices");
+			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
+			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
+			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
+			$result['BorderRadius']	= $this->ReadPropertyInteger("BorderRadius");
 
             $result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 
-
-
 			return json_encode($result) ;
+		}
+
+		public function GetFullUpdateMessageMANU()
+		{
+			//funktion um die Kachelvisu besser testen zu können.
+			$result = [];
+			
+			$AVGPriceVal	= json_decode($this->ReadAttributeString("AVGPrice"),true);
+			
+			$result['price_avg'] 	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+			$result['price_min'] 	= round(min($AVGPriceVal),2);
+			$result['price_max'] 	= round(max($AVGPriceVal),2);
+			$result['price_cur'] 	= $AVGPriceVal[0];
+			$result['FSBars'] 	 	= $this->ReadPropertyFloat("FontSizeBars");
+			$result['FSHours'] 	 	= $this->ReadPropertyFloat("FontSizeHours");
+			$result['FSPrices']  	= $this->ReadPropertyFloat("FontSizePrices");
+			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
+			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
+			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
+			$result['BorderRadius']	= $this->ReadPropertyInteger("BorderRadius");
+
+            //$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+            $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
+			$this->UpdateVisualizationValue(json_encode($result));
+
+			return  ;
 		}
 		
 	}

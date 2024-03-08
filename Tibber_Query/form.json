@@ -96,6 +96,13 @@
                         "digits": 1, 
                         "minimum": 0.5,
                         "maximum": 10.0
+                    },
+                    {   "type": "NumberSpinner",
+                        "name": "BorderRadius",
+                        "caption": "set the border radius of the bars",
+                        "digits": 0, 
+                        "minimum": 0,
+                        "maximum": 50.0
                     }
                 ]
         }

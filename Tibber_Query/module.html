@@ -28,8 +28,8 @@
             font-size: var(--FSBars);
             writing-mode: vertical-lr;
             color: var(--FCBars);
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            border-top-left-radius: var(--BorderRadius);
+            border-top-right-radius: var(--BorderRadius);
             display: flex;
             align-items: center;
             justify-content: end;
@@ -129,7 +129,6 @@
                     break;
                     case 'FSBars':
                          root.style.setProperty('--FSBars', data[parameter] + 'em');
-                         console.log('Setze innerHTML für', parameter);
                     break;
                     case 'FSHours':
                         root.style.setProperty('--FSHours', data[parameter] + 'em');
@@ -146,7 +145,9 @@
                     case 'BGCHour':
                         root.style.setProperty('--BGCHour', data[parameter]);
                     break;
-
+                    case 'BorderRadius':
+                        root.style.setProperty('--BorderRadius', data[parameter] + 'px');
+                    break;
                     case 'Ahead_Price_Data':
 
                     let index = 0;
@@ -169,15 +170,19 @@
                                 }                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
                                 switch (row.level){
                                     case "NORMAL":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 125%)';
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 150%)';
                                     break;
                                     case "CHEAP":
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 200%)';
+                                    break;
                                     case "VERY_CHEAP":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 300%)    ';
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 300%)';
                                     break;
                                     case "EXPENSIVE":
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 100%)';
+                                    break;
                                     case "VERY_EXPENSIVE":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ff7700 50%)';
+                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 80%)';
                                     break;
                                 }
                                 index++;
