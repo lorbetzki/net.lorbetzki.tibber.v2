@@ -63,7 +63,8 @@
                         "caption": "set fontsize of the prices of the bars",
                         "digits": 1,
                         "minimum": 0.5,
-                        "maximum": 10.0
+                        "maximum": 10.0,
+                        "visible":false
                     },
                     {
                         "type": "SelectColor",
@@ -76,7 +77,8 @@
                         "caption": "set fontsize of the prices of the hours",
                         "digits": 1,
                         "minimum": 0.5,
-                        "maximum": 10.0 
+                        "maximum": 10.0,
+                        "visible":false 
                     },
                     {
                         "type": "SelectColor",
@@ -95,7 +97,8 @@
                         "caption": "set fontsize of the prices of the prices",
                         "digits": 1, 
                         "minimum": 0.5,
-                        "maximum": 10.0
+                        "maximum": 10.0,
+                        "visible":false
                     },
                     {   "type": "NumberSpinner",
                         "name": "BorderRadius",

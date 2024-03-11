@@ -97,6 +97,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->ProcessPriceData($result, );
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
+			$this->Update_Ahead_Price_Data();
 
 		}
 
@@ -883,23 +884,7 @@ require_once __DIR__ . '/../libs/functions.php';
 		public function GetFullUpdateMessageMANU()
 		{
 			//funktion um die Kachelvisu besser testen zu können.
-			$result = [];
-			
-			$AVGPriceVal	= json_decode($this->ReadAttributeString("AVGPrice"),true);
-			
-			$result['price_avg'] 	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
-			$result['price_min'] 	= round(min($AVGPriceVal),2);
-			$result['price_max'] 	= round(max($AVGPriceVal),2);
-			$result['price_cur'] 	= $AVGPriceVal[0];
-			$result['FSBars'] 	 	= $this->ReadPropertyFloat("FontSizeBars");
-			$result['FSHours'] 	 	= $this->ReadPropertyFloat("FontSizeHours");
-			$result['FSPrices']  	= $this->ReadPropertyFloat("FontSizePrices");
-			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
-			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
-			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
-			$result['BorderRadius']	= $this->ReadPropertyInteger("BorderRadius");
-
-            //$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+			$result[] = $this->GetFullUpdateMessage();
             $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 			$this->UpdateVisualizationValue(json_encode($result));
 

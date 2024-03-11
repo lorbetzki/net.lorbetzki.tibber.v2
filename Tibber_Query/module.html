@@ -10,13 +10,13 @@
         #bars {
             display: flex;
             align-items: flex-end;
-            height: calc(100% - 20px - 20px);
+            height: calc(98% - 20px - 20px);
         }
 
         #prices {
             height: 20px;
             margin-left: 5px;
-            font-size: var(--FSPrices);
+            font-size: clamp(12px, 2vw, 20px);
         }
 
         #bars > div {
@@ -25,7 +25,7 @@
             margin-left: 1px;
             margin-right: 1px;
             text-align: right;
-            font-size: var(--FSBars);
+            font-size: clamp(12px, 2vw, 20px);
             writing-mode: vertical-lr;
             color: var(--FCBars);
             border-top-left-radius: var(--BorderRadius);
@@ -40,7 +40,7 @@
             margin-bottom: 5px;
             margin-top: 5px;
             text-align: center;
-            font-size: var(--FSHours);
+            font-size: clamp(12px, 2vw, 20px);
         }
 
         #hours > div {
