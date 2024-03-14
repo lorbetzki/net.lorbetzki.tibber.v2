@@ -111,15 +111,15 @@ Tibber.price.cent | Integer | Eurocent zweistellig
 Tibber.price.euro | Integer | Euro zweistellig
 
 ### .6 PHP-Befehlsreferenz
-`TIBBERRT_ReloginSequence(integer $InstanzID);`
+`TIBRTV2_ReloginSequence(integer $InstanzID);`
 INTERNE FUNKTION: startet eine Neuanmeldungssequenz. Dafür wird die vorherige Verbindung geschlossen, zufällig zwischen 60-120 sek gewartet und neu angemeldet.
 
 Beispiel:
-`TIBBERRT_ReloginSequence(12345);`
+`TIBRTV2_ReloginSequence(12345);`
 
 
-`TIBBERRT_StartWatchdog(integer $InstanzID);`
-INTERNE FUNKTION: sobald Daten empfangen werden, wird der Watschdog auf 30 sek. gesetzt, kommen innerhalb dieser Zeit keine Daten an, wird die Funktion TIBBERRT_ReloginSequence() ausgeführt.
+`TIBRTV2_StartWatchdog(integer $InstanzID);`
+INTERNE FUNKTION: sobald Daten empfangen werden, wird der Watschdog auf 30 sek. gesetzt, kommen innerhalb dieser Zeit keine Daten an, wird die Funktion TIBRTV2_ReloginSequence() ausgeführt.
 
 Beispiel:
-`TIBBERRT_StartWatchdog(12345);`
+`TIBRTV2_StartWatchdog(12345);`

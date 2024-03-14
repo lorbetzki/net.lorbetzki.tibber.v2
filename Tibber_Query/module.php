@@ -29,14 +29,27 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterAttributeString('AVGPrice', '');
 			$this->RegisterAttributeString('Ahead_Price_Data', '');
 
-			$this->RegisterPropertyFloat("FontSizeBars", '1.0');
-			$this->RegisterPropertyFloat("FontSizeHours", '1.0');
-			$this->RegisterPropertyFloat("FontSizePrices", '1.0');
+			$this->RegisterPropertyInteger("HTML_FontSizeMinB", '12');
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxB", '20');
+			$this->RegisterPropertyInteger("HTML_FontSizeDefB", '2');
 
-			$this->RegisterPropertyInteger("FontColorBars", 0xFFFFFF);
-			$this->RegisterPropertyInteger("FontColorHour", 0xFFFFFF);
-			$this->RegisterPropertyInteger("BGColorHour", 0x808080);
-			$this->RegisterPropertyInteger("BorderRadius", 5);
+			$this->RegisterPropertyInteger("HTML_FontSizeMinH", '12');
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxH", '20');
+			$this->RegisterPropertyInteger("HTML_FontSizeDefH", '2');
+
+			$this->RegisterPropertyInteger("HTML_FontSizeMinP", '12');
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxP", '20');
+			$this->RegisterPropertyInteger("HTML_FontSizeDefP", '2');
+
+			$this->RegisterPropertyInteger("HTML_FontColorBars", 0xFFFFFF);
+			$this->RegisterPropertyInteger("HTML_FontColorHour", 0xFFFFFF);
+			$this->RegisterPropertyInteger("HTML_BGColorHour", 0x808080);
+			$this->RegisterPropertyInteger("HTML_BorderRadius", 5);
+			$this->RegisterPropertyInteger("HTML_Scale", 5);
+
+			$this->RegisterPropertyInteger("HTML_BGCstartG", 0x28CDAB);
+			$this->RegisterPropertyInteger("HTML_BGCstopG", 0x1D8B75);
+					
 
 			$this->SetVisualizationType(1);
 
@@ -98,7 +111,6 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
 			$this->Update_Ahead_Price_Data();
-
 		}
 
 		public function GetConsumptionHourlyLast(int $count)
@@ -217,8 +229,8 @@ require_once __DIR__ . '/../libs/functions.php';
 					}
 				$value[] = ["caption"=> $caption, "value"=> $home["id"] ];
 			}
-			$jsonform["elements"][1]['items'][0]["options"] = $value;
-			$jsonform["elements"][1]['items'][0]["visible"] = true;
+			$jsonform["elements"][2]["options"] = $value;
+			$jsonform["elements"][2]["visible"] = true;
 
 			return json_encode($jsonform);
 		}
@@ -330,13 +342,15 @@ require_once __DIR__ . '/../libs/functions.php';
 			}
 			
        		$this->WriteAttributeString("Price_Array", json_encode($result_array));
+	
+			//update tile Visu
+			$this->Update_Ahead_Price_Data();
+			$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 
 			if ($this->ReadPropertyBoolean('Price_log') == true){
 				$this->LogAheadPrices($result_array);
 			}
 
-			//update tile Visu
-			$this->Update_Ahead_Price_Data();
 
 		}
 
@@ -867,15 +881,20 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['price_min'] 	= round(min($AVGPriceVal),2);
 			$result['price_max'] 	= round(max($AVGPriceVal),2);
 			$result['price_cur'] 	= $AVGPriceVal[0];
-			$result['FSBars'] 	 	= $this->ReadPropertyFloat("FontSizeBars");
-			$result['FSHours'] 	 	= $this->ReadPropertyFloat("FontSizeHours");
-			$result['FSPrices']  	= $this->ReadPropertyFloat("FontSizePrices");
-			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorBars"));
-			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("FontColorHour"));
-			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("BGColorHour"));
-			$result['BorderRadius']	= $this->ReadPropertyInteger("BorderRadius");
 
-            $result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
+			$result['FontSizeBars']  	= $this->ReadPropertyInteger("HTML_FontSizeMinB")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefB")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxB")."px";
+			$result['FontSizeHours']  	= $this->ReadPropertyInteger("HTML_FontSizeMinH")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefH")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxH")."px";
+			$result['FontSizePrices']  	= $this->ReadPropertyInteger("HTML_FontSizeMinP")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefP")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxP")."px";
+
+			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorBars"));
+			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorHour"));
+			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorHour"));
+			$result['BorderRadius']	= $this->ReadPropertyInteger("HTML_BorderRadius");
+			$result['Scale']		= $this->ReadPropertyInteger("HTML_Scale");
+			$result['Gradient']		= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstartG")).", #".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstopG"));
+
+			
+			$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 
 			return json_encode($result) ;

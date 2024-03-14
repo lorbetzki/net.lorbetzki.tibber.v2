@@ -48,7 +48,25 @@
             "Too many requests. Your IP is now temporarily banned for calling API for a few minutes.":"Zu viele Anfragen. Die IP ist temporär für einige minuten geblockt.",
             " o clock": " Uhr",
             "Ahead price data variable for energy optimizer":"Preisvorschaudaten für Energie Optimierer",
-            "Create price ahead variable for energy optimizer":"erstelle Variable für Energie Optimierer"
+            "Create price ahead variable for energy optimizer":"erstelle Variable für Energie Optimierer",
+            "advanced HTML settings": "erweiterte HTML Einstellungen",
+            "Colorsettings":"Farbeinstellungen",
+            "Fontcolor bars":"Schriftfarbe Balken",
+            "Fontcolor actually hour":"Schriftfarbe der aktuellen Stunde",
+            "backgroundcolor of the actually hour":"Hintergrundfarbe der aktuellen Stunde",
+            "Barsettings":"Einstellungen Balken",
+            "set the scale of the bar, values between 1-10 are allowed":"Legen Sie die Skala des Balkens fest, Werte zwischen 1-10 sind zulässig.",
+            "set the border radius of the bars":"setze Balkenradius",
+            "gradient for the bars":"Farbverlauf der Balken",
+            "start gradient":"Beginn Farbe",
+            "stop gradient":"Ende Farbe",
+            "Fontsettings":"Einstellung Schriftart",
+            "Fontsize bars":"Schriftgröße Balken",
+            "set minimum fontsize in px":"mindest Schriftgröße in px",
+            "set default fontsize in vw. 1vw corresponds to 1% of the width of the viewport":"Standard Schriftgröße in vw. 1vw enspricht 1% der Breite des Viewports",
+            "set maximum fontsize in px":"maximalste Schriftgröße in px",
+            "Fontsize hours":"Schriftgröße Stunden",
+            "Fontsize prices":"Schriftgröße Preise"
         }
     }
 }

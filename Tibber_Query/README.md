@@ -62,8 +62,8 @@ Name						 | Typ     | Beschreibung
 Aktueller Preis | FLOAT | Gibt den aktuellen Strompreis von Tibber wieder
 Aktueller Preis Level | INT | Preisniveau auf der Grundlage des nachlaufenden Preisdurchschnitts 
 Day Ahead Preis Hilfsvariable | FLOAT | Wird nur gebraucht um einen Chart über zukünftige Preise erstellen zu können
-Preis Array | STRING | Tibber Abfrage wird in ein Array geschrieben um eigene Anwendungen zu ermöglichen. WIRD ERSETZT DURCH DIE FUNKTION TIBBER_PriceArray();
-Realtime Verfügbar | BOOL | Gibt an, ob ein Pulse oder anderer Smartmeter in Tibber erkannt wurde und Echtzeitabfragen des Verbauchs zu ermöglichen. Dazu das Modul Tibber_Realtime benutzen
+Preis Array | STRING | Tibber Abfrage wird in ein Array geschrieben um eigene Anwendungen zu ermöglichen. WIRD ERSETZT DURCH DIE FUNKTION TIBV2_PriceArray();
+Realtime Verfügbar | BOOL | Gibt an, ob ein Pulse oder anderer Smartmeter in Tibber erkannt wurde und Echtzeitabfragen des Verbauchs zu ermöglichen. Dazu das Modul TIBV2_Realtime benutzen
 Day Ahead Chart | CHART | Multichart mit Anzeige vergangener und zukünftigen Preise
 Heute 0 bis 1 Uhr | FLOAT | Preisvariable pro Stunde 
 Heute 1 bis 2 Uhr | FLOAT | Preisvariable pro Stunde 
@@ -99,71 +99,71 @@ Tibber.price.level | INT | ermittelter Preislevel von Tibber 1 = sehr günstig, 
 Tibber.price.hour | INT | zeigt nur den Suffix "Uhr" an. 
 
 ### .6 PHP-Befehlsreferenz
-`TIBBER_GetPriceData(integer $InstanzID);`
+`TIBV2_GetPriceData(integer $InstanzID);`
 
 Holt sich neue Preisdaten von Tibber ab und schreibt es in eine interne Variable. Bei aktiviertem "Preis - Array anlegen -> Zur Nutzung in Scripten und anderen Modulen" aktiviert ist, wird auch diese Variable geschrieben.
 
 Beispiel:
-`TIBBER_GetPriceData(12345);`
+`TIBV2_GetPriceData(12345);`
 
 
-`TIBBER_SetActualPrice(integer $InstanzID);`
+`TIBV2_SetActualPrice(integer $InstanzID);`
 
 Holt sich neue Preisdaten von Tibber ab und schreibt diese in alle aktivierten Variablen.
 
 Beispiel:
-`TIBBER_SetActualPrice(12345);`	
+`TIBV2_SetActualPrice(12345);`	
 
 
 
-`TIBBER_GetConsumptionHourlyLast(integer $InstanzID, integer $count);`,
+`TIBV2_GetConsumptionHourlyLast(integer $InstanzID, integer $count);`,
 
-`TIBBER_GetConsumptionDailyLast(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionDailyLast(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionWeeklyLast(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionWeeklyLast(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionMonthlyLast(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionMonthlyLast(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionYearlyLast(integer $InstanzID, integer $count);`
+`TIBV2_GetConsumptionYearlyLast(integer $InstanzID, integer $count);`
 
 Holt sich die letzen Verbrauchsdaten für den angegebenen ($count) Zeitraum ab. $count gibt die Anzahl der Datensätze an. Als Ergebnis kommt ein JSON Codierter Datensatz mit dem man weiterarbeiten kann.
 
 Beispiel starte ich um 21:00 diese Abfrage werden die letzten 24 Stunden ab 21:00 des vortages abgeholt:
 
-`TIBBER_GetConsumptionHourlyLast(12345,24);`
+`TIBV2_GetConsumptionHourlyLast(12345,24);`
 
 Beispiel holt den letzten Monat ab:
 
-`TIBBER_GetConsumptionMonthlyLast(12345,1);`
+`TIBV2_GetConsumptionMonthlyLast(12345,1);`
 
 
 
-`TIBBER_GetConsumptionHourlyFirst(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionHourlyFirst(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionDailyFirst(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionDailyFirst(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionWeeklyFirst(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionWeeklyFirst(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionMonthlyFirst(integer $InstanzID, integer $count);`, 
+`TIBV2_GetConsumptionMonthlyFirst(integer $InstanzID, integer $count);`, 
 
-`TIBBER_GetConsumptionYearlyFirst(integer $InstanzID, integer $count);`
+`TIBV2_GetConsumptionYearlyFirst(integer $InstanzID, integer $count);`
 
 Holt sich die Verbrauchsdaten für den angegebenen ($count) Zeitraum ab. $count gibt die Anzahl der Datensätze an. Als Ergebnis kommt ein JSON Codierter Datensatz mit dem man weiterarbeiten kann.
 
 Beispiel holt die letzten 24 Stunden ab Anfang des Monats ab:
 
-`TIBBER_GetConsumptionHourlyFirst(12345,24);`
+`TIBV2_GetConsumptionHourlyFirst(12345,24);`
 
 Beispiel holt die Daten des aktuellen Monats ab:
 
-`TIBBER_GetConsumptionMonthlyFirst(12345,1);`
+`TIBV2_GetConsumptionMonthlyFirst(12345,1);`
 
 
-`TIBBER_PriceArray(integer $InstanzID);`
+`TIBV2_PriceArray(integer $InstanzID);`
 kann für externe Scripte eingesetzt werden. Gibt das abgeholte Preis Array raus
 
 Beispiel:
-`TIBBER_PriceArray(12345);`
+`TIBV2_PriceArray(12345);`
 
 ### 7. Symcon Kachel
 Mit der Version 2 von diesem Modul gibt es auch eine Preisvorschau Kachel. Um diese in der Visu anzeigen zu können wird nur ein Link der Tibber Query Instanz in der Visu Kategorie benötigt. Meinen Dank geht an [Da8ter](https://github.com/da8ter) Kachelsammlung.
