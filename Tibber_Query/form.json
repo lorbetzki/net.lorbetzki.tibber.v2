@@ -90,6 +90,7 @@
                     {   "type": "NumberSpinner",
                         "name": "HTML_Scale",
                         "caption": "set the scale of the bar, values between 1-10 are allowed",
+                        "width":"400px",
                         "digits": 0, 
                         "minimum": 1,
                         "maximum": 10

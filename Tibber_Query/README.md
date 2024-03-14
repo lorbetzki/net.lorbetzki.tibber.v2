@@ -39,13 +39,22 @@ __Konfigurationsseite__:
 
 Name          				     | Beschreibung
 -------------------------------- | -------------------------------------------------------
+aktiviere Instanz | aktivieren der Instanz
 Benutzer Token | Access-Token aus der Tibber API eintragen
 Heim auswählen | Nachdem der Token eingetragen und die Änderung übernommen wurde, werden hier die im Account gespeicherten Heime aufgeführt. Wählt das, welches Ihr abfragen möchtet
 Preisdatenvariablen loggen | Diese Checkbox muss aktiviert werden, wenn die Day Ahead Preise im Archiv gespeichert sowie der Multi-Chart erzeugt werden sollen. [1] 
 Preisvariablen pro Stunde anlegen | Wird diese Checkbox aktivert, werden 48 Variablen ( 24 für den aktuellen Tag und 24 für den Folgetag) für jede Stunde angelegt, welche beim Abruf der Day Ahead Preise aktualisiert werden.
 einige Statistiken | erstellt Variablen mit ein paar statistischen werten.
+erstelle variable für Energie optimierer | Variable um in einer zukünftiger Version des Symcon Energie Optimierers weiter zu verwenden
+Schriftfarbe Balken | ändert die Schriftfarbe innerhalb der Balken
+Schriftfarbe der aktuellen Stunde | ändert die Schriftfarbe der Stunden
+Hintergrundfarbe der aktuellen Stunde | ändert die Hintergrundfarbe der aktuellen Stunde
+Legen Sie die Skala des Balkens fest, Werte zwischen 1-10 sind zulässig. | passt die höhe der Balken an, um differnzen größer wirken zu lassen
+setze Balkenradius | passt den Radius der Balken an
+Beginn Farbverlauf | damit lässt sich der untere Teil der Balken farblich den eigenen wünschen anpassen
+Ende Farbverlauf | damit lässt sich der obere Teil der Balken farblich den eigenen wünschen anpassen
+Schriftgröße Balken, Stunde, Preise min, standard, max | hier kann man die mindest und maximalst größe in Abhängigkeit der Viewport-Breite anpassen. 1VW (Viewport-Width) entspricht dabei 1% der Breite des Viewports.
 
-aktiviere Instanz | aktivieren der Instanz
 
 [1] Es werden Day Ahead Preise für den aktuellen und (wenn schon publiziert) für den Folgetag abgerufen und gespeichert. Dies passiert rückwirkend, da Symcon keine zukünftigen Werte im Archiv erlaubt, in der "Day Ahead Preis Hilfsvariable" Variablen. Dabei wird der aktuelle Tag mit T -2 und der morgige Tag mit T -1 ins Archiv gespeichert.
 Zusätzlich wird automatisch ein Multi-Chart angelegt, welcher diese beiden Tage im stündlichen Vergleich über die beiden Tagen darstellt.
