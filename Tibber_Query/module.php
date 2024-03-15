@@ -49,7 +49,14 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			$this->RegisterPropertyInteger("HTML_BGCstartG", 0x28CDAB);
 			$this->RegisterPropertyInteger("HTML_BGCstopG", 0x1D8B75);
-					
+			$this->RegisterPropertyBoolean("HTML_MarkPriceLevel", false);
+			
+			$this->RegisterPropertyInteger("HTML_PriceLevelThick", '3');
+			$this->RegisterPropertyInteger("HTML_BGColorPriceVC", 0x00FF00);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceC", 0x008000);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceN", 0xFFFF00);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceE", 0xFF8000);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceVE", 0xFF0000);
 
 			$this->SetVisualizationType(1);
 
@@ -232,6 +239,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$jsonform["elements"][2]["options"] = $value;
 			$jsonform["elements"][2]["visible"] = true;
 
+			$jsonform["elements"][6]["items"][5]["visible"] = $this->ReadPropertyBoolean('HTML_MarkPriceLevel');
+			
 			return json_encode($jsonform);
 		}
 
@@ -744,6 +753,9 @@ require_once __DIR__ . '/../libs/functions.php';
 				case "CheckRealtimeEnabled":
 					$this->CheckRealtimeAvailable();
 				break;
+				case "ShowPriceLevelEnhanced":
+					$this->UpdateFormField("ShowPriceLevelEnhanced", "visible", $Value);
+				break;
 				
 			}
 		}
@@ -886,14 +898,21 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['FontSizeHours']  	= $this->ReadPropertyInteger("HTML_FontSizeMinH")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefH")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxH")."px";
 			$result['FontSizePrices']  	= $this->ReadPropertyInteger("HTML_FontSizeMinP")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefP")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxP")."px";
 
-			$result['FCBars'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorBars"));
-			$result['FCHour'] 	 	= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorHour"));
-			$result['BGCHour'] 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorHour"));
-			$result['BorderRadius']	= $this->ReadPropertyInteger("HTML_BorderRadius");
-			$result['Scale']		= $this->ReadPropertyInteger("HTML_Scale");
-			$result['Gradient']		= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstartG")).", #".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstopG"));
+			$result['FCBars'] 	 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorBars"));
+			$result['FCHour'] 	 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorHour"));
+			$result['BGCHour'] 			= sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorHour"));
+			$result['BorderRadius']		= $this->ReadPropertyInteger("HTML_BorderRadius");
+			$result['Scale']			= $this->ReadPropertyInteger("HTML_Scale");
+			$result['Gradient']			= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstartG")).", #".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGCstopG"));
+			$result['MarkPriceLevel']	= $this->ReadPropertyBoolean("HTML_MarkPriceLevel");
+						
+			$result['BGCPriceVC']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceVC"));
+			$result['BGCPriceC']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceC"));
+			$result['BGCPriceN']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceN"));
+			$result['BGCPriceE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceE"));
+			$result['BGCPriceVE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceVE"));
+			$result['PriceLevelThickness']			= $this->ReadPropertyInteger("HTML_PriceLevelThick");
 
-			
 			$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 

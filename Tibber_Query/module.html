@@ -159,6 +159,29 @@
                     case 'Gradient':
                         root.style.setProperty('--Gradient', 'linear-gradient(to top,'+data[parameter]+')');
                     break;
+                    case 'MarkPriceLevel':
+                        MarkPriceLevel = data[parameter];
+                    break;
+                    case 'BGCPriceVC':
+                        BGCPriceVC = data[parameter];
+                    break; 
+                    case 'BGCPriceC':
+                        BGCPriceC = data[parameter];
+                    break; 
+                    case 'BGCPriceN':
+                        BGCPriceN = data[parameter];
+                    break; 
+                    case 'BGCPriceE':
+                        BGCPriceE = data[parameter];
+                    break; 
+                    case 'BGCPriceVE':
+                        BGCPriceVE = data[parameter];
+                    break; 
+                    case 'PriceLevelThickness':
+                        PriceLevelThickness = data[parameter];
+                    break; 
+
+                    
                     case 'Ahead_Price_Data':
 
                     let index = 0;
@@ -185,24 +208,25 @@
                                 //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
                                 document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2)+ ' ct&nbsp;&nbsp;'
                                 
-                                /*
-                                switch (row.level){
-                                    case "NORMAL":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 150%)';
-                                    break;
-                                    case "CHEAP":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 200%)';
-                                    break;
-                                    case "VERY_CHEAP":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 300%)';
-                                    break;
-                                    case "EXPENSIVE":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 100%)';
-                                    break;
-                                    case "VERY_EXPENSIVE":
-                                            document.getElementById('bar_' + index).style.backgroundImage = 'linear-gradient(to top, #28cdab , #ddcf2b, #ff7700 80%)';
-                                    break;
-                                }*/
+                                if (MarkPriceLevel) {
+                                    switch (row.level){
+                                        case "NORMAL":
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
+                                        break;
+                                        case "CHEAP":
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
+                                        break;
+                                        case "VERY_CHEAP":
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
+                                        break;
+                                        case "EXPENSIVE":
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
+
+                                        case "VERY_EXPENSIVE":
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
+                                        break;
+                                    }
+                                }
                                 index++;
                                 if (index >= 24) {
                                     break;

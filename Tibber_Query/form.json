@@ -122,8 +122,57 @@
                                 "caption": "stop gradient"
                             }
                         ]
-                    }
-                    
+                    },
+                    {   "type": "CheckBox",
+                        "name": "HTML_MarkPriceLevel",
+                        "caption": "shows a marker at the bottom of the bars with the current Tibber price level",
+                        "onChange": "IPS_RequestAction($id, 'ShowPriceLevelEnhanced', $HTML_MarkPriceLevel);",
+                        "visible": true
+                    },
+                    { 
+                        "type": "RowLayout",
+                        "name": "ShowPriceLevelEnhanced",
+                        "visible": false,
+                        "items": [
+                            {   "type": "NumberSpinner",
+                                "name": "HTML_PriceLevelThick",
+                                "caption": "thickness of the marker in px",
+                                "digits": 0, 
+                                "minimum": 1,
+                                "maximum": 10
+                            },
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_BGColorPriceVC",
+                                "caption": "Color for Level very cheap"
+                            },
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_BGColorPriceC",
+                                "caption": "Color for Level cheap"
+                            },
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_BGColorPriceN",
+                                "caption": "Color for Level normal"
+                            },
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_BGColorPriceE",
+                                "caption": "Color for Level expensive"
+                            },
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_BGColorPriceVE",
+                                "caption": "Color for Level very expensive"
+                            }
+                        ]
+                    }                    
                 ]
         },
 
