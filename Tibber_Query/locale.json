@@ -67,13 +67,14 @@
             "set maximum fontsize in px":"maximalste Schriftgröße in px",
             "Fontsize hours":"Schriftgröße Stunden",
             "Fontsize prices":"Schriftgröße Preise",
-            "shows a marker at the bottom of the bars with the current Tibber price level":"zeigt eine Markierung am unteren Ende der Balken mit dem aktuellen Tibber Preislevel",
+            "show Tibber price level indicator":"zeige Tibber Preislevel Indikator",
             "Color for Level very cheap":"Farbe für Level sehr günstig",
             "Color for Level cheap":"Farbe für Level günstig",
             "Color for Level normal":"Farbe für Level normal",
             "Color for Level expensive":"Farbe für Level teuer",
             "Color for Level very expensive":"Farbe für Level sehr teuer",
-            "thickness of the marker in px":"dicke der Markierung in px"
+            "thickness of the marker in px":"dicke der Markierung in px",
+            "Reset HTML settings":"alle HTML Einstellungen zurücksetzen"
         }
     }
 }

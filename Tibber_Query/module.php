@@ -6,11 +6,27 @@ require_once __DIR__ . '/../libs/functions.php';
 	class Tibber extends IPSModule
 	{
 		use TibberHelper;
+
+		private const HTML_FontSizeMin = 12;
+		private const HTML_FontSizeMax= 20;
+		private const HTML_FontSizeDef= 2;
+		private const HTML_Color_White= 0xFFFFFF;
+		private const HTML_Color_Grey= 0x808080;
+		private const HTML_Color_Red= 0xFF0000;
+		private const HTML_Color_Orange= 0xFF8000;
+		private const HTML_Color_Mint= 0x28CDAB;
+		private const HTML_Color_Darkmint= 0x1D8B75;
+		
+		private const HTML_Color_Green= 0x008000;
+		private const HTML_Color_Darkgreen= 0x004000;
+		private const HTML_Default_PX= 5;
 		
 		public function Create()
 		{
 			//Never delete this line!
 			parent::Create();
+
+
 
 			$this->RegisterPropertyBoolean("InstanceActive", true);
 			$this->RegisterPropertyString("Token", '');
@@ -29,34 +45,34 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterAttributeString('AVGPrice', '');
 			$this->RegisterAttributeString('Ahead_Price_Data', '');
 
-			$this->RegisterPropertyInteger("HTML_FontSizeMinB", '12');
-			$this->RegisterPropertyInteger("HTML_FontSizeMaxB", '20');
-			$this->RegisterPropertyInteger("HTML_FontSizeDefB", '2');
+			$this->RegisterPropertyInteger("HTML_FontSizeMinB", self::HTML_FontSizeMin);
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxB", self::HTML_FontSizeMax);
+			$this->RegisterPropertyInteger("HTML_FontSizeDefB", self::HTML_FontSizeDef);
 
-			$this->RegisterPropertyInteger("HTML_FontSizeMinH", '12');
-			$this->RegisterPropertyInteger("HTML_FontSizeMaxH", '20');
-			$this->RegisterPropertyInteger("HTML_FontSizeDefH", '2');
+			$this->RegisterPropertyInteger("HTML_FontSizeMinH", self::HTML_FontSizeMin);
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxH", self::HTML_FontSizeMax);
+			$this->RegisterPropertyInteger("HTML_FontSizeDefH", self::HTML_FontSizeDef);
 
-			$this->RegisterPropertyInteger("HTML_FontSizeMinP", '12');
-			$this->RegisterPropertyInteger("HTML_FontSizeMaxP", '20');
-			$this->RegisterPropertyInteger("HTML_FontSizeDefP", '2');
+			$this->RegisterPropertyInteger("HTML_FontSizeMinP", self::HTML_FontSizeMin);
+			$this->RegisterPropertyInteger("HTML_FontSizeMaxP", self::HTML_FontSizeMax);
+			$this->RegisterPropertyInteger("HTML_FontSizeDefP", self::HTML_FontSizeDef);
 
-			$this->RegisterPropertyInteger("HTML_FontColorBars", 0xFFFFFF);
-			$this->RegisterPropertyInteger("HTML_FontColorHour", 0xFFFFFF);
-			$this->RegisterPropertyInteger("HTML_BGColorHour", 0x808080);
-			$this->RegisterPropertyInteger("HTML_BorderRadius", 5);
-			$this->RegisterPropertyInteger("HTML_Scale", 5);
+			$this->RegisterPropertyInteger("HTML_FontColorBars", self::HTML_Color_White);
+			$this->RegisterPropertyInteger("HTML_FontColorHour", self::HTML_Color_White);
+			$this->RegisterPropertyInteger("HTML_BGColorHour", self::HTML_Color_Grey);
+			$this->RegisterPropertyInteger("HTML_BorderRadius", self::HTML_Default_PX);
+			$this->RegisterPropertyInteger("HTML_Scale", self::HTML_Default_PX);
 
-			$this->RegisterPropertyInteger("HTML_BGCstartG", 0x28CDAB);
-			$this->RegisterPropertyInteger("HTML_BGCstopG", 0x1D8B75);
+			$this->RegisterPropertyInteger("HTML_BGCstartG", self::HTML_Color_Mint);
+			$this->RegisterPropertyInteger("HTML_BGCstopG", self::HTML_Color_Darkmint);
 			$this->RegisterPropertyBoolean("HTML_MarkPriceLevel", false);
 			
-			$this->RegisterPropertyInteger("HTML_PriceLevelThick", '3');
-			$this->RegisterPropertyInteger("HTML_BGColorPriceVC", 0x00FF00);
-			$this->RegisterPropertyInteger("HTML_BGColorPriceC", 0x008000);
-			$this->RegisterPropertyInteger("HTML_BGColorPriceN", 0xFFFF00);
-			$this->RegisterPropertyInteger("HTML_BGColorPriceE", 0xFF8000);
-			$this->RegisterPropertyInteger("HTML_BGColorPriceVE", 0xFF0000);
+			$this->RegisterPropertyInteger("HTML_PriceLevelThick", self::HTML_Default_PX);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceVC", self::HTML_Color_Darkgreen);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceC", self::HTML_Color_Green);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceN", self::HTML_Color_Mint);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceE", self::HTML_Color_Orange);
+			$this->RegisterPropertyInteger("HTML_BGColorPriceVE", self::HTML_Color_Red);
 
 			$this->SetVisualizationType(1);
 
@@ -756,6 +772,9 @@ require_once __DIR__ . '/../libs/functions.php';
 				case "ShowPriceLevelEnhanced":
 					$this->UpdateFormField("ShowPriceLevelEnhanced", "visible", $Value);
 				break;
+				case "ResetHTML":
+					$this->ResetHTML();
+				break;
 				
 			}
 		}
@@ -928,5 +947,41 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			return  ;
 		}
-		
+
+		//allow to reset all HTML Variables to default
+		private function ResetHTML()
+		{
+			$defaults = [ 
+				'HTML_FontSizeMinB'=> self::HTML_FontSizeMin,
+				'HTML_FontSizeMaxB'=> self::HTML_FontSizeMax,
+				'HTML_FontSizeDefB'=> self::HTML_FontSizeDef,
+				'HTML_FontSizeMinH'=> self::HTML_FontSizeMin,
+				'HTML_FontSizeMaxH'=> self::HTML_FontSizeMax,
+				'HTML_FontSizeDefH'=> self::HTML_FontSizeDef,
+				'HTML_FontSizeMinP'=> self::HTML_FontSizeMin,
+				'HTML_FontSizeMaxP'=> self::HTML_FontSizeMax,
+				'HTML_FontSizeDefP'=> self::HTML_FontSizeDef,
+				'HTML_FontColorBars'=> self::HTML_Color_White,
+				'HTML_FontColorHour'=> self::HTML_Color_White,
+				'HTML_BGColorHour'=> self::HTML_Color_Grey,
+				'HTML_BorderRadius'=> self::HTML_Default_PX,
+				'HTML_Scale'=> self::HTML_Default_PX,
+				'HTML_BGCstartG'=> self::HTML_Color_Mint,
+				'HTML_BGCstopG'=> self::HTML_Color_Darkmint,
+				'HTML_MarkPriceLevel'=> false,
+				'HTML_PriceLevelThick'=> self::HTML_Default_PX,
+				'HTML_BGColorPriceVC'=> self::HTML_Color_Darkgreen,
+				'HTML_BGColorPriceC'=> self::HTML_Color_Green,
+				'HTML_BGColorPriceN'=> self::HTML_Color_Mint,
+				'HTML_BGColorPriceE'=> self::HTML_Color_Orange,
+				'HTML_BGColorPriceVE'=> self::HTML_Color_Red,
+			];
+			
+			foreach ($defaults as $data => $value)
+			{
+				$this->UpdateFormField($data, 'value', $value); 
+				$this->SendDebug(__FUNCTION__,'set '.$data.' to default: '.$value,0);
+
+			}
+		}
 	}

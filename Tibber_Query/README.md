@@ -53,6 +53,9 @@ Legen Sie die Skala des Balkens fest, Werte zwischen 1-10 sind zulässig. | pass
 setze Balkenradius | passt den Radius der Balken an
 Beginn Farbverlauf | damit lässt sich der untere Teil der Balken farblich den eigenen wünschen anpassen
 Ende Farbverlauf | damit lässt sich der obere Teil der Balken farblich den eigenen wünschen anpassen
+zeige Tibber Preislevel Indikator | zeigt eine Markierung am unteren Ende der Balken mit dem aktuellen Tibber Preislevel
+dicke der Markierung in px | hiermit kann man die Markierung in deren Dicke anpassen
+Farbe für Level sehr günstig, günstig, normal, teuer, sehr teuer | anpassen der Farbe für die jeweiligen Level nach eigenen Bedürfniss
 Schriftgröße Balken, Stunde, Preise min, standard, max | hier kann man die mindest und maximalst größe in Abhängigkeit der Viewport-Breite anpassen. 1VW (Viewport-Width) entspricht dabei 1% der Breite des Viewports.
 
 

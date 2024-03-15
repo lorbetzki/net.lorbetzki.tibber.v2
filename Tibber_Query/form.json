@@ -308,6 +308,11 @@
             "type": "Button",
             "label": "Retrieve Home ID",
             "onClick": "IPS_RequestAction($id, 'GetHomesData', '');"
+          },
+          {
+            "type": "Button",
+            "label": "Reset HTML settings",
+            "onClick": "IPS_RequestAction($id, 'ResetHTML', '');"
           }
     ],
     "status": [
