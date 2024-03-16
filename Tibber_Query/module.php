@@ -257,7 +257,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$jsonform["elements"][2]["options"] = $value;
 			$jsonform["elements"][2]["visible"] = true;
 
-			$jsonform["elements"][6]["items"][5]["visible"] = $this->ReadPropertyBoolean('HTML_MarkPriceLevel');
+			$jsonform["elements"][6]["items"][6]["visible"] = $this->ReadPropertyBoolean('HTML_MarkPriceLevel');
 			
 			return json_encode($jsonform);
 		}
