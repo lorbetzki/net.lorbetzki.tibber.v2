@@ -20,7 +20,8 @@ require_once __DIR__ . '/../libs/functions.php';
 		private const HTML_Color_Green= 0x008000;
 		private const HTML_Color_Darkgreen= 0x004000;
 		private const HTML_Default_PX= 5;
-		
+		private const HTML_Default_HourAhead= 24;
+
 		public function Create()
 		{
 			//Never delete this line!
@@ -73,6 +74,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterPropertyInteger("HTML_BGColorPriceN", self::HTML_Color_Mint);
 			$this->RegisterPropertyInteger("HTML_BGColorPriceE", self::HTML_Color_Orange);
 			$this->RegisterPropertyInteger("HTML_BGColorPriceVE", self::HTML_Color_Red);
+			$this->RegisterPropertyInteger("HTML_Default_HourAhead", self::HTML_Default_HourAhead);
 
 			$this->SetVisualizationType(1);
 
@@ -931,6 +933,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['BGCPriceE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceE"));
 			$result['BGCPriceVE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceVE"));
 			$result['PriceLevelThickness']			= $this->ReadPropertyInteger("HTML_PriceLevelThick");
+			$result['HourAhead']					= $this->ReadPropertyInteger("HTML_Default_HourAhead");
 
 			$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
@@ -975,6 +978,7 @@ require_once __DIR__ . '/../libs/functions.php';
 				'HTML_BGColorPriceN'=> self::HTML_Color_Mint,
 				'HTML_BGColorPriceE'=> self::HTML_Color_Orange,
 				'HTML_BGColorPriceVE'=> self::HTML_Color_Red,
+				'HTML_Default_HourAhead'=> self::HTML_Default_HourAhead,				
 			];
 			
 			foreach ($defaults as $data => $value)

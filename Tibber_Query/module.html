@@ -20,7 +20,7 @@
         }
 
         #bars > div {
-            flex: 0 0 calc((100% - (24px * 2)) / 24);
+            flex: var(--HourAhead);
             margin-bottom: 1px;
             margin-left: 1px;
             margin-right: 1px;
@@ -47,9 +47,10 @@
         }
 
         #hours > div {
-            flex: 0 0 calc((100% - (24px * 2)) / 24);
+            flex: var(--HourAhead);
             margin-left: 1px;
             margin-right: 1px;
+            
         }
 
         #hours > div.current {
@@ -75,6 +76,17 @@
 
     </div>
     <script type="text/javascript" charset="UTF-8">
+
+       /* let Scale;
+        let MarkPriceLevel;
+        let BGCPriceVC;
+        let BGCPriceC;
+        let BGCPriceN;
+        let BGCPriceE;
+        let BGCPriceVE;
+        let PriceLevelThickness;*/
+        let HourAhead;
+            
         let bars = document.getElementById("bars");
         for(let i = 0; i < 24; i++) {
             let bar = document.createElement('div');
@@ -92,13 +104,11 @@
             hours.appendChild(hour);
         }
 
-        //handleMessage('%Ahead_Price_Data%');
-
         function handleMessage(message) {
-
-
+                        
             for(let i = 0; i < 24; i++) {
-                document.getElementById('hour_' + i).className = "";
+                //document.getElementById('hour_' + i).className = "";
+                document.getElementById('hour_' + i).className = i;
             }
 
             let min_price = Number.MAX_VALUE;
@@ -109,11 +119,7 @@
             const data = JSON.parse(message);
 
             for (const parameter in data) {
-            //console.log('Aktueller Parameter:', parameter, 'Wert:', decodedData[parameter]);
-            //let max_height = 100 / data['price_max'];
-            // lets get a factor
-           // let max_height = 100 - (data['price_max'] * 100) / (data['price_max'] - (data['price_min']-1));
-
+            
             const element = document.getElementById(parameter);
             var root = document.documentElement;
 
@@ -121,7 +127,6 @@
                 switch (parameter) {
                     case 'price_cur':
                         element.innerHTML = data[parameter] + '&nbsp;ct';
-                        // &nbsp;ct
                     break;
                     case 'price_min':
                         element.innerHTML = data[parameter] + '&nbsp;ct';
@@ -179,9 +184,12 @@
                     break; 
                     case 'PriceLevelThickness':
                         PriceLevelThickness = data[parameter];
+                    break;
+                    case 'HourAhead':
+                        HourAhead = data[parameter];
+                        root.style.setProperty('--HourAhead', '0 0 calc((100% - (24px * 2)) / '+HourAhead+')');
                     break; 
-
-                    
+                                        
                     case 'Ahead_Price_Data':
 
                     let index = 0;
@@ -227,21 +235,26 @@
                                         break;
                                     }
                                 }
+                                // if less than 24 Hour is set, remove elements
+                                if (index >= HourAhead) {
+                                    document.getElementById('bar_' + index).remove();
+                                    document.getElementById('hour_' + index).remove();
+                                    }
+
                                 index++;
                                 if (index >= 24) {
                                     break;
                                 }
+                                
                             }                 
                         break;
 
-                    default:
-                        //console.log('Setze innerHTML für', parameter);
-                        // Setze innerHTML nur, wenn das Element gefunden wurde
-                        //element.innerHTML = data[parameter];
+                        default:
+                            console.log('Unknown parameter: ', parameter);
                         break;
                 }
 
-        }
+         }
             
         }
     </script>

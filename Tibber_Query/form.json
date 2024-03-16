@@ -86,7 +86,15 @@
             "caption": "Barsettings",
             "expanded": false,
             "items": [
-                    
+                
+                    {   "type": "NumberSpinner",
+                        "name": "HTML_Default_HourAhead",
+                        "caption": "Set how many hours you want to see, Min. 12 and Max 24",
+                        "width":"450px",
+                        "digits": 0, 
+                        "minimum": 12,
+                        "maximum": 24
+                    },
                     {   "type": "NumberSpinner",
                         "name": "HTML_Scale",
                         "caption": "set the scale of the bar, values between 1-10 are allowed",
@@ -125,7 +133,7 @@
                     },
                     {   "type": "CheckBox",
                         "name": "HTML_MarkPriceLevel",
-                        "caption": "shows a marker at the bottom of the bars with the current Tibber price level",
+                        "caption": "show Tibber price level indicator",
                         "onChange": "IPS_RequestAction($id, 'ShowPriceLevelEnhanced', $HTML_MarkPriceLevel);",
                         "visible": true
                     },

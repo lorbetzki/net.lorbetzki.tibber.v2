@@ -74,7 +74,8 @@
             "Color for Level expensive":"Farbe für Level teuer",
             "Color for Level very expensive":"Farbe für Level sehr teuer",
             "thickness of the marker in px":"dicke der Markierung in px",
-            "Reset HTML settings":"alle HTML Einstellungen zurücksetzen"
+            "Reset HTML settings":"alle HTML Einstellungen zurücksetzen",
+            "Set how many hours you want to see, Min. 12 and Max 24":"legen Sie fest, wieviele Stunden sie sehen möchten. Minimum sind 12 und 24 das Maximum"
         }
     }
 }
