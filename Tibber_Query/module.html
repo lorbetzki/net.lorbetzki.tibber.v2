@@ -11,6 +11,7 @@
             display: flex;
             align-items: flex-end;
             height: calc(98% - 20px - 20px);
+
         }
 
         #prices {
@@ -62,6 +63,7 @@
   
 </head>
 <body>
+    
     <div id="bars">
         <!-- Will be filled through JavaScript -->
     </div>
@@ -191,7 +193,6 @@
                     break; 
                                         
                     case 'Ahead_Price_Data':
-
                     let index = 0;
                         for(let row of data[parameter]) {
                                 let hour = (new Date(row.start*1000)).getHours();
@@ -215,22 +216,22 @@
                                 
                                 //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
                                 document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2)+ ' ct&nbsp;&nbsp;'
-                                
+                               
                                 if (MarkPriceLevel) {
                                     switch (row.level){
-                                        case "NORMAL":
+                                        case 'NORMAL':
                                                 document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
                                         break;
-                                        case "CHEAP":
+                                        case 'CHEAP':
                                                 document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
                                         break;
-                                        case "VERY_CHEAP":
+                                        case 'VERY_CHEAP':
                                                 document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
                                         break;
-                                        case "EXPENSIVE":
+                                        case 'EXPENSIVE':
                                                 document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
-
-                                        case "VERY_EXPENSIVE":
+                                        break;
+                                        case 'VERY_EXPENSIVE':
                                                 document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
                                         break;
                                     }
@@ -251,7 +252,7 @@
 
                         default:
                             console.log('Unknown parameter: ', parameter);
-                        break;
+                        
                 }
 
          }
