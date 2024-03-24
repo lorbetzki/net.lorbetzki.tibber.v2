@@ -87,6 +87,8 @@
         let BGCPriceE;
         let BGCPriceVE;
         let PriceLevelThickness;*/
+        let BarGradient;
+        let BarColor;
         let HourAhead;
             
         let bars = document.getElementById("bars");
@@ -150,6 +152,7 @@
                     break;
                     case 'FCBars':
                         root.style.setProperty('--FCBars', '#'+data[parameter]);
+                        BarColor = '#'+data[parameter];
                     break;  
                     case 'FCHour':
                         root.style.setProperty('--FCHour', '#'+data[parameter]);
@@ -165,6 +168,8 @@
                     break; 
                     case 'Gradient':
                         root.style.setProperty('--Gradient', 'linear-gradient(to top,'+data[parameter]+')');
+                        BarGradient = 'linear-gradient(to top,'+data[parameter]+')';
+                        console.log(BarGradient);
                     break;
                     case 'MarkPriceLevel':
                         MarkPriceLevel = data[parameter];
@@ -189,29 +194,33 @@
                     break;
                     case 'HourAhead':
                         HourAhead = data[parameter];
-                        root.style.setProperty('--HourAhead', '0 0 calc((100% - (24px * 2)) / '+HourAhead+')');
+                        root.style.setProperty('--HourAhead', '0 0 calc((98% - (24px * 2)) / '+HourAhead+')');
                     break; 
                                         
                     case 'Ahead_Price_Data':
+
                     let index = 0;
                         for(let row of data[parameter]) {
                                 let hour = (new Date(row.start*1000)).getHours();
-                                // console.log(row.start, hour, row.price);
+                                console.log(row.start, hour, row.price);
                                 document.getElementById('hour_' + index).innerText = hour;
                                 if (currentHour === hour) {
                                     document.getElementById('hour_' + index).className = "current";
                                     document.getElementById('price_cur').innerHTML = row.price.toFixed(2) + '&nbsp;ct';
                                 }
+
+                                var bar = document.getElementById('bar_' + index);
+
                                 if (row.price === 0) {
-                                    var bar = document.getElementById('bar_' + index);
                                     bar.style.height = '100%';
                                     bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
                                     bar.style.color = '#FFFFFF';
                                 } else {
-                                    // 100 - ((max-rowprice)*100)/(max-(min-1))
-                                    // document.getElementById('bar_' + index).style.height = Math.floor(row.price * max_height) + '%';
-                                    document.getElementById('bar_' + index).style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
+                                    bar.style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
+                                    bar.style.opacity = '1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
+                                    bar.style.backgroundImage = BarGradient;
+                                    bar.style.color = BarColor;
                                 }                
                                 
                                 //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'

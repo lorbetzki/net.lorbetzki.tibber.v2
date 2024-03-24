@@ -947,7 +947,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result[] = $this->GetFullUpdateMessage();
             $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 			$this->UpdateVisualizationValue(json_encode($result));
-
+			$this->SendDebug(__FUNCTION__,'Update Manu: '.json_encode($result),0);
 			return  ;
 		}
 
