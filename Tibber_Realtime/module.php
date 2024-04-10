@@ -278,8 +278,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$Variables = json_decode($this->ReadPropertyString('Variables'), true);
 			foreach ($Variables as $pos => $Variable) {
 				if($Variable['Keep'] && $Variable['Ident'] == 'minPower'){
-					if ( !IPS_GetObjectIDByIdent('minPowerConsumption', $this->InstanceID)) return;
-					if ( !IPS_GetObjectIDByIdent('maxPowerProduction', $this->InstanceID)) return;
+					if ( !$this->GetIDForIdent('minPowerConsumption')) return;
+					if ( !$this->GetIDForIdent('maxPowerProduction')) return;
 					if ( $this->GetValue('maxPowerProduction') > $this->GetValue('minPowerConsumption') ){
 						$this->SetValue('minPower', $this->GetValue('maxPowerProduction') * -1);
 					}
@@ -288,8 +288,8 @@ require_once __DIR__ . '/../libs/functions.php';
 					}
 				}
 				if($Variable['Keep'] && $Variable['Ident'] == 'maxPower'){
-					if ( !IPS_GetObjectIDByIdent('maxPowerConsumption', $this->InstanceID)) return;
-					if ( !IPS_GetObjectIDByIdent('minPowerProduction', $this->InstanceID)) return;
+					if ( !$this->GetIDForIdent('maxPowerConsumption')) return;
+					if ( !$this->GetIDForIdent('minPowerProduction')) return;
 						$this->SetValue('maxPower', $this->GetValue('maxPowerConsumption') );		
 				}
 			}
