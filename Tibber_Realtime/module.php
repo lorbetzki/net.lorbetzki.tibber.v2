@@ -50,8 +50,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->GetRtApi();					//aktuelle Realtime API Adresse abrufen
 
 			//register watchdogtimer
-			$this->RegisterTimer("ReloginSequence", 0, 'TIBRTV2__ReloginSequence($_IPS[\'TARGET\']);');
-			$this->RegisterTimer("StartWatchdog", 0, 'TIBRTV2__StartWatchdog($_IPS[\'TARGET\']);');
+			$this->RegisterTimer("ReloginSequence", 0, 'TIBRTV2_ReloginSequence($_IPS[\'TARGET\']);');
+			$this->RegisterTimer("StartWatchdog", 0, 'TIBRTV2_StartWatchdog($_IPS[\'TARGET\']);');
 
 		}
 
@@ -295,7 +295,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			}
 		}
 
-		protected function SendTIBRTV2_($Payload)
+		protected function SendTibberRT($Payload)
 		{
 			$tibber['DataID'] = '{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}';
 			$tibber['Buffer'] = $Payload;
@@ -340,7 +340,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			if ($this->ReadPropertyBoolean('Active')){
 
 				$json = '{"type":"connection_init","payload":{"token": "'.$this->ReadPropertyString('Token').'"}}';
-				$this->SendTIBRTV2_($json);
+				$this->SendTibberRT($json);
 				$this->SendDebug(__FUNCTION__, $json, 0);
 			}
 		}
@@ -379,13 +379,13 @@ require_once __DIR__ . '/../libs/functions.php';
 				
 			$json = '{"id":"'.$this->ReadPropertyInteger('TibberID').'","type":"subscribe","payload": {"variables":{},"extensions":{},"query": "subscription{ liveMeasurement(homeId: \"'.$this->ReadPropertyString('Home_ID').'\") {'.$tags.'} }"}}';
 			$this->SendDebug(__FUNCTION__,"JSON: ". $json, 0);
-			$this->SendTIBRTV2_($json);
+			$this->SendTibberRT($json);
 		}
 
 		private function CloseConnection()
 		{
 			$json = '{"id":"'.$this->ReadPropertyInteger('TibberID').'","type":"complete"}';
-			$this->SendTIBRTV2_($json);
+			$this->SendTibberRT($json);
 			$this->SendDebug(__FUNCTION__, "send Close Connection request ".json_encode($json), 0);
 		}
 
