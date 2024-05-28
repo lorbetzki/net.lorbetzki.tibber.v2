@@ -170,6 +170,14 @@
                     break;
                     case 'Scale':
                         Scale =  data[parameter];
+                    break;
+                    case 'NoData':
+                            if(Object.keys(data[parameter]).length >=1 )
+                            {
+                                document.getElementById('block').innerHTML = data[parameter];
+                                document.getElementById('block').style.color = "red";
+                                console.log(NoData);
+                            };
                     break; 
                     case 'Gradient':
                         root.style.setProperty('--Gradient', 'linear-gradient(to top,'+data[parameter]+')');

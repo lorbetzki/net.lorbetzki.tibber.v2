@@ -908,13 +908,18 @@ require_once __DIR__ . '/../libs/functions.php';
 		{
 			$result = [];
 
-			$AVGPriceVal	= json_decode($this->ReadAttributeString("AVGPrice"),true);
-			
-			$result['price_avg'] 	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
-			$result['price_min'] 	= round(min($AVGPriceVal),2);
-			$result['price_max'] 	= round(max($AVGPriceVal),2);
-			$result['price_cur'] 	= $AVGPriceVal[0];
-
+			if (!empty($this->ReadAttributeString("AVGPrice")))
+			{
+				$AVGPriceVal			= json_decode($this->ReadAttributeString("AVGPrice"),true);
+				$result['price_avg'] 	= round(array_sum($AVGPriceVal)/count($AVGPriceVal),2);
+				$result['price_min'] 	= round(min($AVGPriceVal),2);
+				$result['price_max'] 	= round(max($AVGPriceVal),2);
+				$result['price_cur'] 	= $AVGPriceVal[0];		
+			}
+			else
+			{
+				$result['NoData'] = $this->Translate('no data available, please check log file for error messages.'); 
+			}
 			$result['FontSizeBars']  	= $this->ReadPropertyInteger("HTML_FontSizeMinB")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefB")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxB")."px";
 			$result['FontSizeHours']  	= $this->ReadPropertyInteger("HTML_FontSizeMinH")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefH")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxH")."px";
 			$result['FontSizePrices']  	= $this->ReadPropertyInteger("HTML_FontSizeMinP")."px, ".$this->ReadPropertyInteger("HTML_FontSizeDefP")."vw, ".$this->ReadPropertyInteger("HTML_FontSizeMaxP")."px";
