@@ -126,12 +126,17 @@ require_once __DIR__ . '/../libs/functions.php';
 		
 		public function GetPriceData()
 		{
+			if ($this->GetStatus() == 203)
+			{
+				$this->SetStatus(104);
+			}
 			// Build Request Data
 			$request = '{ "query": "{viewer { home(id: \"'. $this->ReadPropertyString('Home_ID') .'\") { currentSubscription { priceInfo { today { total energy tax startsAt level } tomorrow { total energy tax startsAt level }}}}}}"}';
 			$result = $this->CallTibber($request);
 			if (!$result) return;		//Bei Fehler abbrechen
 
 			$this->SendDebug("Price_Result", $result, 0);
+
 			$this->ProcessPriceData($result, );
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
@@ -325,11 +330,13 @@ require_once __DIR__ . '/../libs/functions.php';
 			$prices = json_decode($result, true);
 
 			// check if currentSubscription is nul, in this case we dont have a contract and dont get price infos
-			if ($prices["data"]["viewer"]["home"]["currentSubscription"] == false)
+			// wrong if ($prices["data"]["viewer"]["home"]["currentSubscription"] == false)
+			if (empty($prices["data"]["viewer"]["home"]["currentSubscription"]["priceInfo"]["today"]))
 				{
 					$this->SetStatus(203);
 					return;
 				}
+		
 			foreach ($prices["data"]["viewer"]["home"]["currentSubscription"]["priceInfo"]["today"] AS $key => $wa_price) {
 				
 				$var = 'PT60M_T0_'.$key;
