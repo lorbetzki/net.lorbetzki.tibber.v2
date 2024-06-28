@@ -146,6 +146,17 @@
                     case 'price_avg':
                         element.innerHTML = data[parameter] + '&nbsp;ct';
                     break;
+                    case 'bar_price_round':
+                        BarPriceRound = data[parameter];
+                    break;
+                    case 'bar_price_vis_ct':
+                   
+                    VisCent = '&nbsp;&nbsp;';
+                    if(data[parameter] == true )
+                        {
+                            VisCent = ' ct&nbsp;&nbsp;';
+                        }
+                    break;
                     case 'FontSizeBars':
                        root.style.setProperty('--FontSizeBars', 'clamp('+data[parameter]+')');
                     break;
@@ -219,7 +230,7 @@
                                 document.getElementById('hour_' + index).innerText = hour;
                                 if (currentHour === hour) {
                                     document.getElementById('hour_' + index).className = "current";
-                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(2) + '&nbsp;ct';
+                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
                                 }
 
                                 var bar = document.getElementById('bar_' + index);
@@ -237,7 +248,7 @@
                                 }                
                                 
                                 //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
-                                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2)+ ' ct&nbsp;&nbsp;'
+                                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
                                
                                 if (MarkPriceLevel) {
                                     switch (row.level){

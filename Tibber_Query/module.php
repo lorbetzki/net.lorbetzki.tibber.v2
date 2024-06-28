@@ -8,19 +8,21 @@ require_once __DIR__ . '/../libs/functions.php';
 		use TibberHelper;
 
 		private const HTML_FontSizeMin = 12;
-		private const HTML_FontSizeMax= 20;
-		private const HTML_FontSizeDef= 2;
-		private const HTML_Color_White= 0xFFFFFF;
-		private const HTML_Color_Grey= 0x808080;
-		private const HTML_Color_Red= 0xFF0000;
-		private const HTML_Color_Orange= 0xFF8000;
-		private const HTML_Color_Mint= 0x28CDAB;
-		private const HTML_Color_Darkmint= 0x1D8B75;
+		private const HTML_FontSizeMax = 20;
+		private const HTML_FontSizeDef = 2;
+		private const HTML_Color_White = 0xFFFFFF;
+		private const HTML_Color_Grey = 0x808080;
+		private const HTML_Color_Red = 0xFF0000;
+		private const HTML_Color_Orange = 0xFF8000;
+		private const HTML_Color_Mint = 0x28CDAB;
+		private const HTML_Color_Darkmint = 0x1D8B75;
 		
-		private const HTML_Color_Green= 0x008000;
-		private const HTML_Color_Darkgreen= 0x004000;
-		private const HTML_Default_PX= 5;
-		private const HTML_Default_HourAhead= 24;
+		private const HTML_Color_Green = 0x008000;
+		private const HTML_Color_Darkgreen = 0x004000;
+		private const HTML_Default_PX = 5;
+		private const HTML_Default_HourAhead = 24;
+		private const HTML_Bar_Price_Round = 2;
+		private const HTML_Bar_Price_vis_ct = true;
 
 		public function Create()
 		{
@@ -75,7 +77,9 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterPropertyInteger("HTML_BGColorPriceE", self::HTML_Color_Orange);
 			$this->RegisterPropertyInteger("HTML_BGColorPriceVE", self::HTML_Color_Red);
 			$this->RegisterPropertyInteger("HTML_Default_HourAhead", self::HTML_Default_HourAhead);
-
+			$this->RegisterPropertyInteger("HTML_Bar_Price_Round", self::HTML_Bar_Price_Round);
+			$this->RegisterPropertyBoolean("HTML_Bar_Price_vis_ct", self::HTML_Bar_Price_vis_ct);
+			
 			$this->SetVisualizationType(1);
 
 			//--- Register Timer
@@ -947,6 +951,10 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['PriceLevelThickness']			= $this->ReadPropertyInteger("HTML_PriceLevelThick");
 			$result['HourAhead']					= $this->ReadPropertyInteger("HTML_Default_HourAhead");
 
+			$result['bar_price_round']				= $this->ReadPropertyInteger("HTML_Bar_Price_Round");
+			$result['bar_price_vis_ct']				= $this->ReadPropertyBoolean("HTML_Bar_Price_vis_ct");
+
+
 			$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
 
@@ -990,7 +998,9 @@ require_once __DIR__ . '/../libs/functions.php';
 				'HTML_BGColorPriceN'=> self::HTML_Color_Mint,
 				'HTML_BGColorPriceE'=> self::HTML_Color_Orange,
 				'HTML_BGColorPriceVE'=> self::HTML_Color_Red,
-				'HTML_Default_HourAhead'=> self::HTML_Default_HourAhead,				
+				'HTML_Default_HourAhead'=> self::HTML_Default_HourAhead,
+				'HTML_Bar_Price_Round'=> self::HTML_Bar_Price_Round,
+				'HTML_Bar_Price_vis_ct'=> self::HTML_Bar_Price_vis_ct			
 			];
 			
 			foreach ($defaults as $data => $value)

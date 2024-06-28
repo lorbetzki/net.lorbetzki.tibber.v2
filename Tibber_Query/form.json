@@ -19,7 +19,7 @@
             "visible": false,
             "options": [ {"caption" : "Select Home", "value":"0"} ]
         },
-        {
+        {   
             "type": "ExpansionPanel",
             "caption": "Price Data -> Variable Settings",
             "expanded": false,
@@ -58,13 +58,6 @@
             "caption": "Colorsettings",
             "expanded": false,
             "items": [
-                    
-                    {
-                        "type": "SelectColor",
-                        "allowTransparent": "false",
-                        "name": "HTML_FontColorBars",
-                        "caption": "Fontcolor bars"
-                    },
                     {
                         "type": "SelectColor",
                         "allowTransparent": "false",
@@ -180,7 +173,34 @@
                                 "caption": "Color for Level very expensive"
                             }
                         ]
-                    }                    
+                    },
+                    { 
+                        "type": "Label", 
+                        "caption": "display of prices in the bar" 
+                    },
+                    { 
+                        "type": "RowLayout",
+                        "items": [
+                            {
+                                "type": "SelectColor",
+                                "allowTransparent": "false",
+                                "name": "HTML_FontColorBars",
+                                "caption": "Fontcolor bars"
+                            },
+                            {
+                                "type": "NumberSpinner",
+                                "name": "HTML_Bar_Price_Round",
+                                "caption": "Number of decimal places",
+                                "minimum": 0,
+                                "maximum": 2
+                            },
+                            {
+                                "type": "CheckBox",
+                                "name": "HTML_Bar_Price_vis_ct",
+                                "caption": "show ct suffix"
+                            }
+                        ]
+                    }                                        
                 ]
         },
 

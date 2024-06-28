@@ -50,12 +50,15 @@ Schriftfarbe Balken | ändert die Schriftfarbe innerhalb der Balken
 Schriftfarbe der aktuellen Stunde | ändert die Schriftfarbe der Stunden
 Hintergrundfarbe der aktuellen Stunde | ändert die Hintergrundfarbe der aktuellen Stunde
 Legen Sie die Skala des Balkens fest, Werte zwischen 1-10 sind zulässig. | passt die höhe der Balken an, um differnzen größer wirken zu lassen
-setze Balkenradius | passt den Radius der Balken an
 Beginn Farbverlauf | damit lässt sich der untere Teil der Balken farblich den eigenen wünschen anpassen
 Ende Farbverlauf | damit lässt sich der obere Teil der Balken farblich den eigenen wünschen anpassen
 zeige Tibber Preislevel Indikator | zeigt eine Markierung am unteren Ende der Balken mit dem aktuellen Tibber Preislevel
 dicke der Markierung in px | hiermit kann man die Markierung in deren Dicke anpassen
 Farbe für Level sehr günstig, günstig, normal, teuer, sehr teuer | anpassen der Farbe für die jeweiligen Level nach eigenen Bedürfniss
+setze Balkenradius | passt den Radius der Balken an
+anzeige der Nachkommastelle | zeigt im Balken den Preis mit 1, 2 oder 0 Nachommastellen an
+Zeige cent als Suffix | zeigt im Balken ct ans suffix an oder nicht
+
 Schriftgröße Balken, Stunde, Preise min, standard, max | hier kann man die mindest und maximalst größe in Abhängigkeit der Viewport-Breite anpassen. 1VW (Viewport-Width) entspricht dabei 1% der Breite des Viewports.
 
 
