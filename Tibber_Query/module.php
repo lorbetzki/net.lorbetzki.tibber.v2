@@ -239,6 +239,9 @@ require_once __DIR__ . '/../libs/functions.php';
 				}
 				$this->Update_Ahead_Price_Data();
 				$this->SetUpdateTimerActualPrice();
+				
+				// Tile Visu update
+				$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 			}
 		}
 
