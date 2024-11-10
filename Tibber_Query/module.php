@@ -23,6 +23,7 @@ require_once __DIR__ . '/../libs/functions.php';
 		private const HTML_Default_HourAhead = 24;
 		private const HTML_Bar_Price_Round = 2;
 		private const HTML_Bar_Price_vis_ct = true;
+		private const HTML_Hour_WriteMode = false;
 
 		public function Create()
 		{
@@ -80,6 +81,9 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterPropertyInteger("HTML_Bar_Price_Round", self::HTML_Bar_Price_Round);
 			$this->RegisterPropertyBoolean("HTML_Bar_Price_vis_ct", self::HTML_Bar_Price_vis_ct);
 			
+			$this->RegisterPropertyBoolean("HTML_Hour_WriteMode", self::HTML_Hour_WriteMode);
+
+
 			$this->SetVisualizationType(1);
 
 			//--- Register Timer
@@ -270,7 +274,8 @@ require_once __DIR__ . '/../libs/functions.php';
 			$jsonform["elements"][2]["visible"] = true;
 
 			$jsonform["elements"][6]["items"][6]["visible"] = $this->ReadPropertyBoolean('HTML_MarkPriceLevel');
-			
+			//$jsonform["elements"][7]["items"][3] = $this->ReadPropertyBoolean('HTML_Hour_WriteMode');
+
 			return json_encode($jsonform);
 		}
 
@@ -657,7 +662,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->RegisterVariableFloat("act_price", $this->Translate('actual price'), 'Tibber.price.cent', 0);
 			$this->RegisterVariableInteger("act_level", $this->Translate('actual price level'), 'Tibber.price.level', 0);
 			$this->RegisterVariableBoolean("RT_enabled", $this->Translate('realtime available'), '', 0);
-			
+
 			if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool') == true){
 				$this->RegisterVariableString("Ahead_Price_Data", $this->Translate("Ahead price data variable for energy optimizer"), "~TextBox", 0);
 			}
@@ -957,6 +962,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['bar_price_round']				= $this->ReadPropertyInteger("HTML_Bar_Price_Round");
 			$result['bar_price_vis_ct']				= $this->ReadPropertyBoolean("HTML_Bar_Price_vis_ct");
 
+			$result['hour_write_mode']				= $this->ReadPropertyBoolean("HTML_Hour_WriteMode");;
 
 			$result['Ahead_Price_Data'] = json_decode($this->ReadAttributeString('Ahead_Price_Data'),true);
             //$result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
@@ -1003,7 +1009,9 @@ require_once __DIR__ . '/../libs/functions.php';
 				'HTML_BGColorPriceVE'=> self::HTML_Color_Red,
 				'HTML_Default_HourAhead'=> self::HTML_Default_HourAhead,
 				'HTML_Bar_Price_Round'=> self::HTML_Bar_Price_Round,
-				'HTML_Bar_Price_vis_ct'=> self::HTML_Bar_Price_vis_ct			
+				'HTML_Bar_Price_vis_ct'=> self::HTML_Bar_Price_vis_ct,
+				'HTML_Hour_WriteMode'=> self::HTML_Hour_WriteMode		
+			
 			];
 			
 			foreach ($defaults as $data => $value)

@@ -250,6 +250,11 @@
                     "type": "Label", 
                     "caption": "Fontsize hours" 
                 },
+                {
+                    "type": "CheckBox",
+                    "name": "HTML_Hour_WriteMode",
+                    "caption": "rotate the hour text by 180 degrees"
+                },
                 { 
                     "type": "RowLayout",
                     "items": [

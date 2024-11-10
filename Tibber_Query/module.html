@@ -47,7 +47,7 @@
             display: flex;
             margin-bottom: 5px;
             margin-top: 5px;
-            text-align: center;
+            text-align: var(--TextAlignHours);
             font-size: var(--FontSizeHours);
         }
 
@@ -55,7 +55,7 @@
             flex: var(--HourAhead);
             margin-left: 1px;
             margin-right: 1px;
-            
+            writing-mode: var(--WriteMode);
         }
 
         #hours > div.current {
@@ -172,7 +172,8 @@
                     break;  
                     case 'FCHour':
                         root.style.setProperty('--FCHour', '#'+data[parameter]);
-                    break;  
+                    break;  console.log(bar.style.height);
+
                     case 'BGCHour':
                         root.style.setProperty('--BGCHour', '#'+data[parameter]);
                     break;
@@ -182,6 +183,15 @@
                     case 'Scale':
                         Scale =  data[parameter];
                     break;
+                    case 'hour_write_mode':
+                        root.style.setProperty('--WriteMode','horizontal-tb');
+                        root.style.setProperty('--TextAlignHours','center');
+                       if(data[parameter] == true )
+                            {
+                                root.style.setProperty('--WriteMode','vertical-lr');
+                                root.style.setProperty('--TextAlignHours','left');
+                            }
+                        break;
                     case 'NoData':
                             if(Object.keys(data[parameter]).length >=1 )
                             {

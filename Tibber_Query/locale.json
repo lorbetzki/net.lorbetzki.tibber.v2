@@ -79,7 +79,8 @@
             "no data available, please check log file for error messages.":"keine Daten Verfügbar, bitte das Logfile auf Fehler prüfen.",
             "display of prices in the bar":"Anzeige der Preise im Balken",
             "Number of decimal places":"Anzahl der Nachkommastelle",
-            "show ct suffix":"Zeige cent als suffix an"
+            "show ct suffix":"Zeige cent als suffix an",
+            "rotate the hour text by 180 degrees": "drehe den Stundentext um 180 Grad"
         }
     }
 }
