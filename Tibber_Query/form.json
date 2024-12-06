@@ -82,11 +82,11 @@
                 
                     {   "type": "NumberSpinner",
                         "name": "HTML_Default_HourAhead",
-                        "caption": "Set how many hours you want to see, Min. 12 and Max 24",
+                        "caption": "Set how many hours you want to see, Min. 12 and Max. 48",
                         "width":"450px",
                         "digits": 0, 
                         "minimum": 12,
-                        "maximum": 24
+                        "maximum": 48
                     },
                     {   "type": "NumberSpinner",
                         "name": "HTML_Scale",
