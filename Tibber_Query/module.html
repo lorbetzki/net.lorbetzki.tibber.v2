@@ -97,7 +97,7 @@
         let HourAhead;
             
         let bars = document.getElementById("bars");
-        for(let i = 0; i < 24; i++) {
+        for(let i = 0; i < 48; i++) {
             let bar = document.createElement('div');
             bar.id = 'bar_' + i;
             bar.innerHTML = 'xx,xx&nbsp;&nbsp;';
@@ -106,7 +106,7 @@
         }
 
         let hours = document.getElementById("hours");
-        for(let i = 0; i < 24; i++) {
+        for(let i = 0; i < 48; i++) {
             let hour = document.createElement('div');
             hour.id = 'hour_' + i;
             hour.innerHTML = i;
@@ -115,7 +115,7 @@
 
         function handleMessage(message) {
                         
-            for(let i = 0; i < 24; i++) {
+            for(let i = 0; i < 48; i++) {
                 //document.getElementById('hour_' + i).className = "";
                 document.getElementById('hour_' + i).className = i;
             }
@@ -172,8 +172,7 @@
                     break;  
                     case 'FCHour':
                         root.style.setProperty('--FCHour', '#'+data[parameter]);
-                    break;  console.log(bar.style.height);
-
+                    break;
                     case 'BGCHour':
                         root.style.setProperty('--BGCHour', '#'+data[parameter]);
                     break;
@@ -198,7 +197,7 @@
                                 document.getElementById('block').innerHTML = data[parameter];
                                 document.getElementById('block').style.color = "red";
                                 console.log(NoData);
-                            };
+                            }
                     break; 
                     case 'Gradient':
                         root.style.setProperty('--Gradient', 'linear-gradient(to top,'+data[parameter]+')');
@@ -280,13 +279,13 @@
                                     }
                                 }
                                 // if less than 24 Hour is set, remove elements
-                                if (index >= HourAhead) {
+                                if (index > HourAhead) {
                                     document.getElementById('bar_' + index).remove();
                                     document.getElementById('hour_' + index).remove();
                                     }
 
                                 index++;
-                                if (index >= 24) {
+                                if (index >= 48) {
                                     break;
                                 }
                                 
