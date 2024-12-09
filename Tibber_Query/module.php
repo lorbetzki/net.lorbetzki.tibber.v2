@@ -146,7 +146,7 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			$this->SendDebug("Price_Result", $result, 0);
 
-			$this->ProcessPriceData($result, );
+			$this->ProcessPriceData($result);
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
 			$this->Update_Ahead_Price_Data();

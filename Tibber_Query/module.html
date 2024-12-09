@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <style>
         body {
-            overflow: hidden;  
+            overflow: auto;  
         }
 
         #block {
@@ -96,7 +96,7 @@
         let BarColor;
         let HourAhead;
             
-        let bars = document.getElementById("bars");
+      /*  let bars = document.getElementById("bars");
         for(let i = 0; i < 48; i++) {
             let bar = document.createElement('div');
             bar.id = 'bar_' + i;
@@ -112,14 +112,16 @@
             hour.innerHTML = i;
             hours.appendChild(hour);
         }
-
+*/
         function handleMessage(message) {
-                        
-            for(let i = 0; i < 48; i++) {
-                //document.getElementById('hour_' + i).className = "";
-                document.getElementById('hour_' + i).className = i;
-            }
-
+                 
+        //    for(let i = 0; i < 48; i++) {
+        //        //document.getElementById('hour_' + i).className = "";
+        //        document.getElementById('hour_' + i).className = i;
+//
+  //              console.log(i);
+    //        }
+      
             let min_price = Number.MAX_VALUE;
             let max_price = Number.MIN_VALUE;
             let avg_price = 0;
@@ -233,16 +235,40 @@
                     case 'Ahead_Price_Data':
 
                     let index = 0;
+                    let CurrentHourIndex = 0;
                         for(let row of data[parameter]) {
                                 let hour = (new Date(row.start*1000)).getHours();
-                                console.log(row.start, hour, row.price);
-                                document.getElementById('hour_' + index).innerText = hour;
-                                if (currentHour === hour) {
-                                    document.getElementById('hour_' + index).className = "current";
-                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
-                                }
+                                
+                                console.log("Daten " + row.start, hour, row.price);
+
+                                // create bar element for each data
+                                let bars = document.getElementById("bars");
+                                let barD = document.createElement('div');
+                                barD.id = 'bar_' + index;
+                                barD.innerHTML = 'xx,xx&nbsp;&nbsp;';
+                                barD.style.height = Math.floor(Math.random() * 200);
+                                bars.appendChild(barD);
+
+                                // create hour for each data
+                                let hours = document.getElementById("hours");
+                                let hourD = document.createElement('div');
+                                hourD.id = 'hour_' + index;
+                                hourD.innerHTML = index;
+                                hours.appendChild(hourD);
 
                                 var bar = document.getElementById('bar_' + index);
+                                var hourelement = document.getElementById('hour_' + index);
+
+                                // create classname and textelement for each hour
+                                hourelement.className = index;
+                                hourelement.innerText = hour;
+
+                                // mark current hour, but only once
+                                if ((currentHour === hour) && (CurrentHourIndex === 0 )) {
+                                    hourelement.className = "current";
+                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
+                                    CurrentHourIndex = 1;
+                                }
 
                                 if (row.price === 0) {
                                     bar.style.height = '100%';
@@ -257,35 +283,31 @@
                                 }                
                                 
                                 //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
-                                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
+                                bar.innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
                                
                                 if (MarkPriceLevel) {
                                     switch (row.level){
                                         case 'NORMAL':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
+                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
                                         break;
                                         case 'CHEAP':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
+                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
                                         break;
                                         case 'VERY_CHEAP':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
+                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
                                         break;
                                         case 'EXPENSIVE':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
+                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
                                         break;
                                         case 'VERY_EXPENSIVE':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
+                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
                                         break;
                                     }
                                 }
-                                // if less than 24 Hour is set, remove elements
-                                if (index > HourAhead) {
-                                    document.getElementById('bar_' + index).remove();
-                                    document.getElementById('hour_' + index).remove();
-                                    }
-
-                                index++;
-                                if (index >= 48) {
+    
+                               index++;
+    
+                               if (index >= HourAhead) {
                                     break;
                                 }
                                 
