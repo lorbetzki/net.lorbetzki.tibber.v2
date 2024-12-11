@@ -21,6 +21,7 @@ require_once __DIR__ . '/../libs/functions.php';
 		private const HTML_Color_Darkgreen = 0x004000;
 		private const HTML_Default_PX = 5;
 		private const HTML_Default_HourAhead = 24;
+		private const HTML_Max_HourAhead = 48;
 		private const HTML_Bar_Price_Round = 2;
 		private const HTML_Bar_Price_vis_ct = true;
 		private const HTML_Hour_WriteMode = false;
@@ -145,7 +146,7 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			$this->SendDebug("Price_Result", $result, 0);
 
-			$this->ProcessPriceData($result, );
+			$this->ProcessPriceData($result);
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
 			$this->Update_Ahead_Price_Data();
@@ -443,7 +444,7 @@ require_once __DIR__ . '/../libs/functions.php';
 						$valuePrice = $value['Price'];
 						if ($data >= $h)
 						{
-							if ($dateIndex >=24){ break; }
+							if ($dateIndex >= self::HTML_Max_HourAhead){ break; }
 							$AVGPrice[] = $valuePrice;
 							$dateIndex++;
 						}
@@ -500,7 +501,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			}
 			$count = count($result_array);
 			$this->SendDebug('Result_array', $count, 0);
-			if ($count <= 24){
+			if ($count <= self::HTML_Max_HourAhead){
 				AC_AddLoggedValues($this->ReadAttributeInteger("ar_handler"), $this->GetIDForIdent("Ahead_Price"), [[ 'TimeStamp' => mktime(00, 00, 01, intval( date("m") ) , intval(date("d")-1), intval(date("Y"))), 'Value' => 0 ]]);
 			}
 			AC_ReAggregateVariable($this->ReadAttributeInteger("ar_handler"), $this->GetIDForIdent("Ahead_Price"));
@@ -957,7 +958,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			$result['BGCPriceE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceE"));
 			$result['BGCPriceVE']					= "#".sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorPriceVE"));
 			$result['PriceLevelThickness']			= $this->ReadPropertyInteger("HTML_PriceLevelThick");
-			$result['HourAhead']					= $this->ReadPropertyInteger("HTML_Default_HourAhead");
+			$result['HourAhead']					= min ($this->ReadPropertyInteger("HTML_Default_HourAhead"), $this->hoursUntilTomorrowMidnight());
 
 			$result['bar_price_round']				= $this->ReadPropertyInteger("HTML_Bar_Price_Round");
 			$result['bar_price_vis_ct']				= $this->ReadPropertyBoolean("HTML_Bar_Price_vis_ct");
@@ -970,6 +971,19 @@ require_once __DIR__ . '/../libs/functions.php';
 			return json_encode($result) ;
 		}
 
+        private function hoursUntilTomorrowMidnight(): int
+    {
+        // Beginn der aktuellen Stunde
+        $currentHourStart = (new DateTime())->setTime((int)date('H'), 0, 0);
+
+        // übermorgen Mitternacht
+        $overTomorrowMidnight = new DateTime('+2 days midnight');
+
+        // Berechnung der Stunden bis übermorgen Mitternacht
+        $interval = $currentHourStart->diff($overTomorrowMidnight);
+        return ($interval->days * 24) + $interval->h;
+    }
+		
 		public function GetFullUpdateMessageMANU()
 		{
 			//funktion um die Kachelvisu besser testen zu können.
@@ -1018,7 +1032,6 @@ require_once __DIR__ . '/../libs/functions.php';
 			{
 				$this->UpdateFormField($data, 'value', $value); 
 				$this->SendDebug(__FUNCTION__,'set '.$data.' to default: '.$value,0);
-
 			}
 		}
 	}
