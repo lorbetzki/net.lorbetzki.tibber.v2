@@ -84,44 +84,13 @@
     </div>
     <script type="text/javascript" charset="UTF-8">
 
-       /* let Scale;
-        let MarkPriceLevel;
-        let BGCPriceVC;
-        let BGCPriceC;
-        let BGCPriceN;
-        let BGCPriceE;
-        let BGCPriceVE;
-        let PriceLevelThickness;*/
+
         let BarGradient;
         let BarColor;
         let HourAhead;
             
-      /*  let bars = document.getElementById("bars");
-        for(let i = 0; i < 48; i++) {
-            let bar = document.createElement('div');
-            bar.id = 'bar_' + i;
-            bar.innerHTML = 'xx,xx&nbsp;&nbsp;';
-            bar.style.height = Math.floor(Math.random() * 200);
-            bars.appendChild(bar);
-        }
-
-        let hours = document.getElementById("hours");
-        for(let i = 0; i < 48; i++) {
-            let hour = document.createElement('div');
-            hour.id = 'hour_' + i;
-            hour.innerHTML = i;
-            hours.appendChild(hour);
-        }
-*/
         function handleMessage(message) {
                  
-        //    for(let i = 0; i < 48; i++) {
-        //        //document.getElementById('hour_' + i).className = "";
-        //        document.getElementById('hour_' + i).className = i;
-//
-  //              console.log(i);
-    //        }
-      
             let min_price = Number.MAX_VALUE;
             let max_price = Number.MIN_VALUE;
             let avg_price = 0;
@@ -275,7 +244,7 @@
                                     bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
                                     bar.style.color = '#FFFFFF';
-                                } else {
+                                } else { 
                                     bar.style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
                                     bar.style.opacity = '1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = BarGradient;

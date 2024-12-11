@@ -972,16 +972,18 @@ require_once __DIR__ . '/../libs/functions.php';
 		}
 
         private function hoursUntilTomorrowMidnight(): int
-        {
-            $currentDateTime = new DateTime();
+    {
+        // Beginn der aktuellen Stunde
+        $currentHourStart = (new DateTime())->setTime((int)date('H'), 0, 0);
 
-            // übermorgen Mitternacht
-            $overTomorrowMidnight = new DateTime('+2 days midnight');
+        // übermorgen Mitternacht
+        $overTomorrowMidnight = new DateTime('+2 days midnight');
 
-            // Berechnung der Stunden bis übermorgen Mitternacht
-            $interval = $currentDateTime->diff($overTomorrowMidnight);
-            return ($interval->days * 24) + $interval->h;
-        }
+        // Berechnung der Stunden bis übermorgen Mitternacht
+        $interval = $currentHourStart->diff($overTomorrowMidnight);
+        return ($interval->days * 24) + $interval->h;
+    }
+		
 		public function GetFullUpdateMessageMANU()
 		{
 			//funktion um die Kachelvisu besser testen zu können.
@@ -1030,7 +1032,6 @@ require_once __DIR__ . '/../libs/functions.php';
 			{
 				$this->UpdateFormField($data, 'value', $value); 
 				$this->SendDebug(__FUNCTION__,'set '.$data.' to default: '.$value,0);
-
 			}
 		}
 	}
