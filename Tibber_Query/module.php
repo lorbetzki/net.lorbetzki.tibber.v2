@@ -129,7 +129,7 @@ require_once __DIR__ . '/../libs/functions.php';
 				$this->SetStatus(104); // instanz deaktiveren
 			}
 			// Tile Visu update
-			$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
+			//$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 
 		}
 		
@@ -150,6 +150,9 @@ require_once __DIR__ . '/../libs/functions.php';
 			$this->SetUpdateTimerPrices();
 			$this->Statistics(json_decode($this->PriceArray(), true));
 			$this->Update_Ahead_Price_Data();
+
+			//$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
+
 		}
 
 		public function GetConsumptionHourlyLast(int $count)
@@ -392,7 +395,7 @@ require_once __DIR__ . '/../libs/functions.php';
 	
 			//update tile Visu
 			$this->Update_Ahead_Price_Data();
-			$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
+			//$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 
 			if ($this->ReadPropertyBoolean('Price_log') == true){
 				$this->LogAheadPrices($result_array);
@@ -477,7 +480,7 @@ require_once __DIR__ . '/../libs/functions.php';
 				if ($this->ReadPropertyBoolean('Ahead_Price_Data_bool')){
 					$this->SetValue("Ahead_Price_Data", $Ahead_Price_Data);
 				}
-				$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
+				//$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
 			}
 		}
 
@@ -972,26 +975,27 @@ require_once __DIR__ . '/../libs/functions.php';
 		}
 
         private function hoursUntilTomorrowMidnight(): int
-    {
-        // Beginn der aktuellen Stunde
-        $currentHourStart = (new DateTime())->setTime((int)date('H'), 0, 0);
+   		{
+			// Beginn der aktuellen Stunde
+			$currentHourStart = (new DateTime())->setTime((int)date('H'), 0, 0);
 
-        // übermorgen Mitternacht
-        $overTomorrowMidnight = new DateTime('+2 days midnight');
+			// übermorgen Mitternacht
+			$overTomorrowMidnight = new DateTime('+2 days midnight');
 
-        // Berechnung der Stunden bis übermorgen Mitternacht
-        $interval = $currentHourStart->diff($overTomorrowMidnight);
-        return ($interval->days * 24) + $interval->h;
-    }
+			// Berechnung der Stunden bis übermorgen Mitternacht
+			$interval = $currentHourStart->diff($overTomorrowMidnight);
+			return ($interval->days * 24) + $interval->h;
+    	}
 		
 		public function GetFullUpdateMessageMANU()
 		{
 			//funktion um die Kachelvisu besser testen zu können.
 			$result[] = $this->GetFullUpdateMessage();
             $result['Ahead_Price_Data'] = json_decode($this->GetValue("Ahead_Price_Data"),true);
+
 			$this->UpdateVisualizationValue(json_encode($result));
 			$this->SendDebug(__FUNCTION__,'Update Manu: '.json_encode($result),0);
-			return  ;
+			return ;
 		}
 
 		//allow to reset all HTML Variables to default

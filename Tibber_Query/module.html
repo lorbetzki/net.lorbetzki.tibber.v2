@@ -89,12 +89,37 @@
         let BarColor;
         let HourAhead;
             
+        let bars = document.getElementById("bars");
+        for(let i = 0; i < 48; i++) {
+            let bar = document.createElement('div');
+            bar.id = 'bar_' + i;
+            bar.innerHTML = 'xx,xx&nbsp;&nbsp;';
+            bar.style.height = Math.floor(Math.random() * 200);
+            bars.appendChild(bar);
+        }
+        let hours = document.getElementById("hours");
+        for(let i = 0; i < 48; i++) {
+            let hour = document.createElement('div');
+            hour.id = 'hour_' + i;
+            hour.innerHTML = i;
+            hour.id.className = i;
+            hours.appendChild(hour);
+        }
+
         function handleMessage(message) {
-                 
+            
+              
+         /*   for(let i = 0; i < 48; i++) {
+                //document.getElementById('hour_' + i).className = "";
+                document.getElementById('hour_' + i).className = i;
+            }
+  */
             let min_price = Number.MAX_VALUE;
             let max_price = Number.MIN_VALUE;
             let avg_price = 0;
 
+            let hours = document.getElementById("hours");
+         
             const currentHour = new Date().getHours();
             const data = JSON.parse(message);
 
@@ -203,84 +228,77 @@
                                         
                     case 'Ahead_Price_Data':
 
-                    let index = 0;
-                    let CurrentHourIndex = 0;
+                       let index = 0;
+                       let CurrentHourIndex = 0;
                         for(let row of data[parameter]) {
                                 let hour = (new Date(row.start*1000)).getHours();
-                                
-                                console.log("Daten " + row.start, hour, row.price);
+                                console.log(row.start, hour, row.price);
 
-                                // create bar element for each data
-                                let bars = document.getElementById("bars");
-                                let barD = document.createElement('div');
-                                barD.id = 'bar_' + index;
-                                barD.innerHTML = 'xx,xx&nbsp;&nbsp;';
-                                barD.style.height = Math.floor(Math.random() * 200);
-                                bars.appendChild(barD);
-
-                                // create hour for each data
-                                let hours = document.getElementById("hours");
-                                let hourD = document.createElement('div');
-                                hourD.id = 'hour_' + index;
-                                hourD.innerHTML = index;
-                                hours.appendChild(hourD);
-
-                                var bar = document.getElementById('bar_' + index);
-                                var hourelement = document.getElementById('hour_' + index);
-
-                                // create classname and textelement for each hour
-                                hourelement.className = index;
-                                hourelement.innerText = hour;
-
-                                // mark current hour, but only once
-                                if ((currentHour === hour) && (CurrentHourIndex === 0 )) {
-                                    hourelement.className = "current";
-                                    document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
-                                    CurrentHourIndex = 1;
+                                document.getElementById('hour_' + index).innerText = hour;
+                                // only one CurrentHour exist
+                                if(CurrentHourIndex === 0 ){
+                                    if (currentHour === hour) {
+                                        document.getElementById('hour_' + index).className = "current";
+                                        document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
+                                    }
+                                    CurrentHourIndex++;
                                 }
+                                // if bar is zero make transparency bar
+                                var bar = document.getElementById('bar_' + index);
 
                                 if (row.price === 0) {
                                     bar.style.height = '100%';
                                     bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
                                     bar.style.color = '#FFFFFF';
-                                } else { 
+                                } else {
                                     bar.style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
                                     bar.style.opacity = '1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
                                     bar.style.backgroundImage = BarGradient;
                                     bar.style.color = BarColor;
-                                }                
-                                
-                                //document.getElementById('bar_' + index).innerHTML = row.price.toFixed(2) + ' ct&nbsp;&nbsp;'
-                                bar.innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
-                               
+                                }   
+                                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
+
                                 if (MarkPriceLevel) {
                                     switch (row.level){
                                         case 'NORMAL':
-                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
                                         break;
                                         case 'CHEAP':
-                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
                                         break;
                                         case 'VERY_CHEAP':
-                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
                                         break;
                                         case 'EXPENSIVE':
-                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
                                         break;
                                         case 'VERY_EXPENSIVE':
-                                                bar.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
+                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
                                         break;
                                     }
                                 }
-    
-                               index++;
-    
-                               if (index >= HourAhead) {
-                                    break;
-                                }
-                                
-                            }                 
+                            
+                               index++;                               
+                            }
+
+                            //remove obselte rows
+                           // console.log("HouraHead " + HourAhead + " Index " + index);
+                            if (HourAhead <= index) {
+                                    //reverse counter
+                                   for(let i = 47; i >=  HourAhead; i--) 
+                                   {
+                                    // console.log("reverse counter " + i);
+                                        if (document.getElementById('bar_' + i)){
+                                        document.getElementById('bar_' + i).remove();
+                                        }
+                                        if (document.getElementById('hour_' + i)){
+
+                                        document.getElementById('hour_' + i).remove();
+                                        }
+                                   }
+                                } 
+                           
                         break;
 
                         default:
