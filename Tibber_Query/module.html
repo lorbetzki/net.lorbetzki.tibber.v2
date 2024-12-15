@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <style>
         body {
-            overflow: auto;  
+            overflow: auto;
+            color: var(--content-color, var(--font-color));
         }
 
         #block {
@@ -60,11 +61,14 @@
 
         #hours > div.current {
             background-color: var(--BGCHour);
-            color: var(--FCHour);
             border-radius: 3px;
         }
     </style>
-  
+  <!--             color: var(--FCHourDefault);
+
+                color: var(--FCHour);
+ -->
+
 </head>
 <body>
     <div id="block">
@@ -88,7 +92,11 @@
         let BarGradient;
         let BarColor;
         let HourAhead;
-            
+        let UseSkinColor;
+        let UseDefaultColorHour;
+
+        document.documentElement.style.setProperty('--font-color', queryParameters.get('textcolor'));
+
         let bars = document.getElementById("bars");
         for(let i = 0; i < 48; i++) {
             let bar = document.createElement('div');
@@ -117,9 +125,9 @@
             let min_price = Number.MAX_VALUE;
             let max_price = Number.MIN_VALUE;
             let avg_price = 0;
-
+            
             let hours = document.getElementById("hours");
-         
+            
             const currentHour = new Date().getHours();
             const data = JSON.parse(message);
 
@@ -168,9 +176,17 @@
                     break;  
                     case 'FCHour':
                         root.style.setProperty('--FCHour', '#'+data[parameter]);
+                        UseCurrentColorHour = '#'+data[parameter];
+
                     break;
                     case 'BGCHour':
                         root.style.setProperty('--BGCHour', '#'+data[parameter]);
+                    break;
+                    case 'FCHourDefault':
+                        if (data[parameter]){
+                            document.documentElement.style.setProperty('--content-color', '#'+data[parameter] );
+                            console.log("Use fontcolors: #" +data[parameter]);
+                        }
                     break;
                     case 'BorderRadius':
                         root.style.setProperty('--BorderRadius', data[parameter] + 'px');
@@ -230,51 +246,57 @@
 
                        let index = 0;
                        let CurrentHourIndex = 0;
-                        for(let row of data[parameter]) {
+
+                       for(let row of data[parameter]) {
                                 let hour = (new Date(row.start*1000)).getHours();
                                 console.log(row.start, hour, row.price);
 
-                                document.getElementById('hour_' + index).innerText = hour;
+                                let barindex = document.getElementById('bar_' + index);
+                                let hourindex = document.getElementById('hour_' + index);
+
+                                hourindex.innerText = hour;
+
                                 // only one CurrentHour exist
                                 if(CurrentHourIndex === 0 ){
                                     if (currentHour === hour) {
-                                        document.getElementById('hour_' + index).className = "current";
-                                        document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + VisCent;
+                                        hourindex.className = "current";
+                                        hourindex.style.color = UseCurrentColorHour;
+                                        document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + " ct";
                                     }
                                     CurrentHourIndex++;
                                 }
+
                                 // if bar is zero make transparency bar
-                                var bar = document.getElementById('bar_' + index);
 
                                 if (row.price === 0) {
-                                    bar.style.height = '100%';
-                                    bar.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
-                                    bar.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
-                                    bar.style.color = '#FFFFFF';
+                                    barindex.style.height = '100%';
+                                    barindex.style.opacity = '0.1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
+                                    barindex.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)';
+                                    barindex.style.color = '#FFFFFF';
                                 } else {
-                                    bar.style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
-                                    bar.style.opacity = '1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
-                                    bar.style.backgroundImage = BarGradient;
-                                    bar.style.color = BarColor;
+                                    barindex.style.height = Math.floor( 100 - ((data['price_max'] - row.price) *100)/(data['price_max']-(data['price_min'] - Scale)) ) + '%';
+                                    barindex.style.opacity = '1'; // Setzt die Transparenz des spezifischen bar-Elements auf 10%
+                                    barindex.style.backgroundImage = BarGradient;
+                                    barindex.style.color = BarColor;
                                 }   
-                                document.getElementById('bar_' + index).innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
+                                barindex.innerHTML = row.price.toFixed(BarPriceRound)+ VisCent;
 
                                 if (MarkPriceLevel) {
                                     switch (row.level){
                                         case 'NORMAL':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
+                                            barindex.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceN;
                                         break;
                                         case 'CHEAP':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
+                                            barindex.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceC;
                                         break;
                                         case 'VERY_CHEAP':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
+                                            barindex.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVC;
                                         break;
                                         case 'EXPENSIVE':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
+                                            barindex.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceE;
                                         break;
                                         case 'VERY_EXPENSIVE':
-                                                document.getElementById('bar_' + index).style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
+                                            barindex.style.borderBottom = PriceLevelThickness+'px solid '+BGCPriceVE;
                                         break;
                                     }
                                 }
@@ -288,19 +310,24 @@
                                     //reverse counter
                                    for(let i = 47; i >=  HourAhead; i--) 
                                    {
-                                    // console.log("reverse counter " + i);
-                                        if (document.getElementById('bar_' + i)){
-                                        document.getElementById('bar_' + i).remove();
-                                        }
-                                        if (document.getElementById('hour_' + i)){
+                                        let barindex = document.getElementById('bar_' + i);
+                                        let hourindex = document.getElementById('hour_' + i);
 
-                                        document.getElementById('hour_' + i).remove();
+                                        if (barindex){
+                                            barindex.remove();
+                                        }
+                                        if (hourindex){
+                                            hourindex.remove();
                                         }
                                    }
                                 } 
                            
                         break;
+                        case 'reload':
+                            location.reload();
+                            console.log('location reload: ', parameter);
 
+                        break;
                         default:
                             console.log('Unknown parameter: ', parameter);
                         

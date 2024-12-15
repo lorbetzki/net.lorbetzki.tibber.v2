@@ -69,8 +69,21 @@
                         "allowTransparent": "false",
                         "name": "HTML_BGColorHour",
                         "caption": "backgroundcolor of the actually hour"
-                    }
-                    
+                    },
+                    {
+                        "type": "CheckBox",
+                        "name": "HTML_FontColorHourDefaultSymcon",
+                        "caption": "Use own Fontcolor for Hour instead from Symcon Theme",
+                        "visible": true,
+                        "onChange":"IPS_RequestAction($id, 'ShowDefaultFontColorHour', $HTML_FontColorHourDefaultSymcon);"
+                    },
+                    {
+                        "type": "SelectColor",
+                        "allowTransparent": "false",
+                        "name": "HTML_FontColorHourDefault",
+                        "caption": "default Fontcolor hour",
+                        "visible": false
+                    }                    
                 ]
         },
 

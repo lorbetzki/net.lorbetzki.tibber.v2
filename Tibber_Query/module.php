@@ -16,7 +16,8 @@ require_once __DIR__ . '/../libs/functions.php';
 		private const HTML_Color_Orange = 0xFF8000;
 		private const HTML_Color_Mint = 0x28CDAB;
 		private const HTML_Color_Darkmint = 0x1D8B75;
-		
+		private const HTML_Color_Black = 0x000000;
+
 		private const HTML_Color_Green = 0x008000;
 		private const HTML_Color_Darkgreen = 0x004000;
 		private const HTML_Default_PX = 5;
@@ -64,6 +65,10 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			$this->RegisterPropertyInteger("HTML_FontColorBars", self::HTML_Color_White);
 			$this->RegisterPropertyInteger("HTML_FontColorHour", self::HTML_Color_White);
+			
+			$this->RegisterPropertyBoolean("HTML_FontColorHourDefaultSymcon", false);
+			$this->RegisterPropertyInteger("HTML_FontColorHourDefault", self::HTML_Color_Black);
+
 			$this->RegisterPropertyInteger("HTML_BGColorHour", self::HTML_Color_Grey);
 			$this->RegisterPropertyInteger("HTML_BorderRadius", self::HTML_Default_PX);
 			$this->RegisterPropertyInteger("HTML_Scale", self::HTML_Default_PX);
@@ -130,6 +135,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			}
 			// Tile Visu update
 			//$this->UpdateVisualizationValue($this->GetFullUpdateMessage());
+			$this->Reload();
 
 		}
 		
@@ -276,6 +282,7 @@ require_once __DIR__ . '/../libs/functions.php';
 			}
 			$jsonform["elements"][2]["options"] = $value;
 			$jsonform["elements"][2]["visible"] = true;
+			$jsonform["elements"][5]["items"][3]["visible"] = $this->ReadPropertyBoolean('HTML_FontColorHourDefaultSymcon');
 
 			$jsonform["elements"][6]["items"][6]["visible"] = $this->ReadPropertyBoolean('HTML_MarkPriceLevel');
 			//$jsonform["elements"][7]["items"][3] = $this->ReadPropertyBoolean('HTML_Hour_WriteMode');
@@ -800,7 +807,12 @@ require_once __DIR__ . '/../libs/functions.php';
 				case "ResetHTML":
 					$this->ResetHTML();
 				break;
-				
+				case "ShowDefaultFontColorHour":
+					$this->UpdateFormField("HTML_FontColorHourDefault", "visible", $Value);
+				break;
+				case "reload":
+					$this->Reload();
+				break;
 			}
 		}
 
@@ -949,6 +961,15 @@ require_once __DIR__ . '/../libs/functions.php';
 
 			$result['FCBars'] 	 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorBars"));
 			$result['FCHour'] 	 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorHour"));
+
+			if ($this->ReadPropertyBoolean("HTML_FontColorHourDefaultSymcon")){
+				$result['FCHourDefault'] 	 		= sprintf('%06X', $this->ReadPropertyInteger("HTML_FontColorHourDefault"));
+			}
+			else
+			{
+				$result['FCHourDefault'] 	 		= false;
+			}
+			
 			$result['BGCHour'] 			= sprintf('%06X', $this->ReadPropertyInteger("HTML_BGColorHour"));
 			$result['BorderRadius']		= $this->ReadPropertyInteger("HTML_BorderRadius");
 			$result['Scale']			= $this->ReadPropertyInteger("HTML_Scale");
@@ -998,6 +1019,16 @@ require_once __DIR__ . '/../libs/functions.php';
 			return ;
 		}
 
+		// just reload location
+		public function Reload()
+		{
+			//funktion um die Kachelvisu besser testen zu können.
+            $result['reload'] = true;
+
+			$this->UpdateVisualizationValue(json_encode($result));
+			$this->SendDebug(__FUNCTION__,'Reload Tile: '.json_encode($result),0);
+			return ;
+		}
 		//allow to reset all HTML Variables to default
 		private function ResetHTML()
 		{
@@ -1013,6 +1044,7 @@ require_once __DIR__ . '/../libs/functions.php';
 				'HTML_FontSizeDefP'=> self::HTML_FontSizeDef,
 				'HTML_FontColorBars'=> self::HTML_Color_White,
 				'HTML_FontColorHour'=> self::HTML_Color_White,
+				'HTML_FontColorHourDefault'=> self::HTML_Color_Black,
 				'HTML_BGColorHour'=> self::HTML_Color_Grey,
 				'HTML_BorderRadius'=> self::HTML_Default_PX,
 				'HTML_Scale'=> self::HTML_Default_PX,

@@ -80,7 +80,9 @@
             "display of prices in the bar":"Anzeige der Preise im Balken",
             "Number of decimal places":"Anzahl der Nachkommastelle",
             "show ct suffix":"Zeige cent als suffix an",
-            "rotate the hour text by 180 degrees": "drehe den Stundentext um 180 Grad"
+            "rotate the hour text by 180 degrees": "drehe den Stundentext um 180 Grad",
+            "Use own Fontcolor for Hour instead from Symcon Theme":"Nutze eigene Schriftfarbe für Stunden anstatt die vom Symcon Theme.",
+            "default Fontcolor hour":"eigene Schriftfarbe für Stunden"
         }
     }
 }
