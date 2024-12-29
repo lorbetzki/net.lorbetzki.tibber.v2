@@ -261,7 +261,7 @@
                                     if (currentHour === hour) {
                                         hourindex.className = "current";
                                         hourindex.style.color = UseCurrentColorHour;
-                                        document.getElementById('price_cur').innerHTML = row.price.toFixed(BarPriceRound) + " ct";
+                                        document.getElementById('price_cur').innerHTML = row.price.toFixed(2) + " ct";
                                     }
                                     CurrentHourIndex++;
                                 }
