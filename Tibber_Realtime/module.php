@@ -351,7 +351,7 @@ require_once __DIR__ . '/../libs/functions.php';
 							"Active"       		 => $this->ReadPropertyBoolean("Active"),
 							"URL"       		 => $this->ReadPropertyString("Api_RT"),
 							"VerifyCertificate"  => true,
-							"Headers"		 	 => "[{\"Name\":\"Sec-WebSocket-Protocol\",\"Value\":\"graphql-transport-ws\"},{\"Name\":\"user-agent\",\"Value\":\"symcon\/6.4 com.tibber\/1.8.3\"}]"
+							"Headers"		 	 => "[{\"Name\":\"Sec-WebSocket-Protocol\",\"Value\":\"graphql-transport-ws\"},{\"Name\":\"user-agent\",\"Value\":\"symcon\/7.1 net.lorbetzki.tibber.v2\/2.4.4\"}]"
 		 			];
 			$this->SendDebug(__FUNCTION__, 'Create the Configuration '.json_encode($Config), 0);
 			return json_encode($Config);
