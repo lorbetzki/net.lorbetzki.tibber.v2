@@ -1,3 +1,7 @@
+### ACHTUNG ! Dieses Modul ist DEPRECATED ###
+
+jedoch wurde die Weiterentwicklung dankenswerterweise von [Da8ter](https://github.com/da8ter/TibberV2) übernommen.
+
 ### IP-Symcon Modul Library: Tibber V.2 
  
 Diese Modul wurde von Philipp Hirzel entwickelt aufgrund von Zeitmangel aber leider nicht veröffentlicht. Dankenswerterweise durfte ich das Modul übernehmen und der Symcon Community zur Verfügung stellen. Bei Fragen oder Wünschem gerne Meldung an mich.
